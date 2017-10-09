@@ -16,6 +16,8 @@
     "express-session": "^1.15.6",
     "imageCenter": "file:../../../Desktop/imgCenter/imageCenter-0.1.1.tgz",
     "jade": "^1.11.0",
+    "jstransformer-markdown": "^1.2.1",
+    "markdown": "^0.5.0",
     "mongoose": "^4.11.5",
     "morgan": "~1.8.1",
     "serve-favicon": "~2.4.2"

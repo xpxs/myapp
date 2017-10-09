@@ -1,8 +1,11 @@
 var mongoose = require('mongoose'); //导入mongoose模块
-var crypto = require('crypto');
-var Index = require('../models/m_index'); //导入模型数据模块
-var Users = require('../models/users'); //导入模型数据模块
-var Posts = require('../models/m_post'); //导入模型数据模块
+var   crypto = require('crypto');
+var markdown = require('markdown').markdown;
+
+//数据集模块
+var    Index = require('../models/m_index'); //导入模型数据模块
+var    Users = require('../models/users'); //导入模型数据模块
+var    Posts = require('../models/m_post'); //导入模型数据模块
 
 
 module.exports = function(app) {
@@ -21,6 +24,7 @@ module.exports = function(app) {
       console.log("data", data);
     })
   })
+  //注册页面get请求
   app.get('/reg', function(req, res) {
     res.render('reg', {
       title: '注册',
@@ -29,6 +33,7 @@ module.exports = function(app) {
       user: req.session.user
     });
   });
+  //注册页面post提交请求
   app.post('/reg', function(req, res, next) {
     var name = req.body.name,
       password = req.body.password,
@@ -77,6 +82,8 @@ module.exports = function(app) {
       });
     })
   });
+
+  //登录路由get请求
   app.get('/login', checkNotLogin);
   app.get('/login', function(req, res) {
     res.render('login', {
@@ -86,6 +93,8 @@ module.exports = function(app) {
       user: req.session.user
     });
   });
+
+  //登录路由post提交请求
   app.post('/login', checkNotLogin);
   app.post('/login', function(req, res) {
     if(!trim(req.body.name)){
@@ -115,7 +124,8 @@ module.exports = function(app) {
       res.redirect('/'); //登陆成功后跳转到主页
     })
   });
-  //获得文章列表
+
+  //文章列表get请求
   app.get('/post', checkLogin);
   app.get('/post', function(req, res) {
     res.render('post', { 
@@ -124,7 +134,19 @@ module.exports = function(app) {
       info: req.flash('info')
     });
   });
-  //发表文章
+  app.get('/postGet', function(req, res, next) {
+    Posts.fetch(function(err, data) {
+      data.forEach(function (item) {
+        item.post = markdown.toHTML(item.post);//去掉换行
+      });
+      console.log('data',data);
+      if (err) {
+        console.log(err);
+      }
+      res.render('postGet', { title: '发表后展示',data:data})
+    }); 
+  });
+  //发表文章 post 提交请求
   app.post('/post', checkLogin);
   app.post('/post', function(req, res) {
     if(!trim(req.body.title)){
@@ -156,7 +178,7 @@ module.exports = function(app) {
       });
     })
   });
-
+  //退出登录路由get请求
   app.get('/logout', checkLogin);
   app.get('/logout', function (req, res) {
     req.session.user = null;

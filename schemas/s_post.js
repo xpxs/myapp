@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var markdown = require('markdown').markdown;
 
 //申明一个mongoose对象
 var PostSchema = new mongoose.Schema({

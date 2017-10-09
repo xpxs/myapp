@@ -1,0 +1,11 @@
+extends layout
+ 
+block content
+ div#content
+  h1 #{title}
+   each item in data
+    h2 #{item.title}
+    span #{item.time.day}
+    div
+     :markdown
+     !{item.post}
