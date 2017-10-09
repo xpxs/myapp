@@ -135,7 +135,7 @@ module.exports = function(app) {
     });
   });
   app.get('/postGet', function(req, res, next) {
-    Posts.fetch(function(err, data) {
+    Posts.fetch(function(err, data) {//名称自定义
       data.forEach(function (item) {
         item.post = markdown.toHTML(item.post);//去掉换行
       });
