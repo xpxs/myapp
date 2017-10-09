@@ -1,5 +1,70 @@
-extends layout
 
+extends layout
 block content
-  h1=title
-  p '欢迎光临！' #{title}
+ div#main
+  div.logo 月半小胖博客中心#{title}
+  nav
+    a(href='/') 首页
+    a(href='/blog') 博客
+    a(href='/nose') 前端
+    a(href='/design') 设计
+ div#content
+  //设计模块
+  div#design
+   div.title
+    h2 设计/DESIGN
+   div.design-content
+    ul.list
+     li.col-w.design
+      div.img
+       img(src='/images/logo.jpg')
+      div.info
+       p.design-name 得去旅行
+       p.design-time 时间:2017-01-23
+     li.col-w.design
+      div.img
+       img(src='/images/logo.jpg')
+      div.info
+       p.design-name 得去旅行
+       p.design-time 时间:2017-01-23
+     li.col-w.design
+      div.img
+       img(src='/images/logo.jpg')
+      div.info
+       p.design-name 得去旅行
+       p.design-time 时间:2017-01-23
+     li.col-w.design
+      div.img
+       img(src='/images/logo.jpg')
+      div.info
+       p.design-name 得去旅行
+       p.design-time 时间:2017-01-23
+   div.more
+    a(href='/design') 查看更多
+  //最新文章
+  div#nose
+   div.title
+    h2 最新文章
+   div.nose-content
+    ul.list
+     each article in data
+      li.item
+       a(href='#')
+        div.img
+         img(src='#{article.a_img}')
+       div.right
+        h6 #{article.a_title}
+        p #{article.a_con}
+    div
+      a(href="") 上一页
+      a(href="") 下一页
+
+  include footer.jade
+
+
+
+
+
+
+
+

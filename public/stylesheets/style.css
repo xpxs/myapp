@@ -1,8 +1,197 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+* {
+  margin: 0;
+  padding: 0;
 }
 
+ul,
+li {
+  list-style: none;
+ 
+}
+
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  padding-left: 50px;
+}
+
+.list {
+  position: relative;
+}
+
+.list li {
+  position: relative;
+}
+
+#main {
+  border-bottom: 1px solid #ddd;
+  height: 40px;
+  background: #fff;
+}
+
+#main .logo {
+  float: left;
+  width: 200px;
+}
+
+#main nav {
+  line-height: 40px;
+  float: left;
+}
+
+#main nav a {
+  padding: 0 20px;
+  text-decoration: none;
+  color: #111;
+}
+
+#main nav a:hover {
+  color: #00BBFF;
+}
+
+#content {
+  margin: 20px 0;
+}
+
+.title {
+  padding-bottom: 10px;
+}
+
+.title h2 {
+  font-size: 16px;
+  font-weight: normal;
+}
+
+.design-content {
+  width: 50%;
+  overflow: hidden;
+}
+
+.col-w {
+  float: left;
+  width: 200px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
+
+/** 首页‘设计’模块 **/
+
+.design img {
+  width: 100%;
+  float: left;
+  height: 200px;
+}
+
+.design .info {
+  clear: both;
+  padding: 10px;
+  background: #eee;
+}
+
+.design .design-name {
+  line-height: 28px;
+}
+
+.design .design-time {
+  color: #999;
+}
+
+.more {
+  clear: both;
+}
+
+.more a {
+  color: #333;
+  font-size: 12px;
+}
+#nose{
+ margin-top: 30px;
+}
+.nose-content {
+  width: 50%;
+}
+.nose-content .item{
+  min-height: 160px;
+  margin-bottom: 20px;
+}
+.nose-content .item .img{
+ position: absolute;
+ left: 0;
+ top: 0;
+}
+.nose-content .item .right{
+ width: 100%;
+ box-sizing: border-box;
+ padding-right: 15px;
+ padding-left: 220px;
+}
+.nose-content .item .right h6{
+ font-size: 16px;
+ padding-top: 10px;
+ line-height: 32px;
+ color: #00BBFF;
+}
+.nose-content .item .right p{
+  line-height: 21px;
+  margin-top: 5px;
+  color: #666;
+  max-height: 126px;
+  overflow: hidden;
+}
+.img {
+    width: 200px;
+    height: 150px;
+    overflow: hidden;
+    position: relative;
+}
+
+.img img {
+    display: block;
+    position: absolute;
+}
+
+.img img.aspectFill-x {
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.img img.aspectFill-y {
+    height: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#footer{
+  color: #999;
+}
+@media (max-width:991px){
+ .nose-content,.design-content {
+    width: 100%;
+ }
+}
+/*@media (min-width:768px) and (max-width:991px){
+ .col-w{
+   width: 47%;
+   margin-right: 3%;
+  }
+  .nose-content,.design-content {
+    width: 100%;
+  }
+}
+@media (min-width:992px) and (max-width:1199px){
+ .col-w{
+   width: 47%;
+   margin-right: 3%;
+  }
+}
+@media (min-width:1200px){
+ .col-w{
+   width: 31%;
+   margin-right: 2.3%;
+  }
+}*/
+
 a {
-  color: #00B7FF;
+  color: #00BBFF;
 }
