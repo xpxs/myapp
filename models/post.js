@@ -1,5 +1,4 @@
-var mongoose = require('mongoose');
-
+var    mongoose = require('mongoose');
 //申明一个mongoose对象
 var PostSchema = new mongoose.Schema({
     name: String,
@@ -30,7 +29,6 @@ PostSchema.statics = {
         //console.log('cb',cb);
         return this
             .find()
-            .limit(5)//查询五条
             //.sort('paw') //排序
             .exec(cb) //回调
     },
@@ -38,8 +36,21 @@ PostSchema.statics = {
         return this
             .findOne({ title: title })
             .exec(cb)
+    },
+    findByOne: function(name, day, title, cb) { //根据id查询单条数据
+        return this
+            .findOne({ 
+                'time.day':day,
+                'name': name,
+                'title':title
+                 })
+            .exec(cb)
+    },
+    findByUser: function(name, cb) { //根据用户查该用户所有数据
+        return this
+            .find({ 'name': name })
+            .exec(cb)
     }
 }
-
-//暴露出去的方法
-module.exports = PostSchema
+var  Posts = mongoose.model('post', PostSchema); // 编译生成Movie 模型
+module.exports = Posts

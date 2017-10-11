@@ -1,15 +1,14 @@
-var mongoose = require('mongoose');
+var    mongoose = require('mongoose');
 
-//申明一个mongoose对象
-var PostSchema = new mongoose.Schema({
-    name: String,
-    time: Object,
-    title: String,
-    post: String,
+//申明一个mongoons对象
+var IndexSchema = new mongoose.Schema({
+    a_title: String,
+    a_img: String,
+    a_con: String
 })
 
 //每次执行都会调用,时间更新操作
-PostSchema.pre('save', function(next) {
+IndexSchema.pre('save', function(next) {
     var date = new Date();
     //存储各种时间格式，方便以后扩展
     var time = {
@@ -25,21 +24,21 @@ PostSchema.pre('save', function(next) {
 })
 
 //查询的静态方法
-PostSchema.statics = {
+IndexSchema.statics = {
     fetch: function(cb) { //查询所有数据
-        //console.log('cb',cb);
         return this
             .find()
             .limit(5)//查询五条
             //.sort('paw') //排序
             .exec(cb) //回调
     },
-    findById: function(title, cb) { //根据id查询单条数据
+    findById: function(name, cb) { //根据id查询单条数据
         return this
-            .findOne({ title: title })
+            .findOne({
+                name: name
+            })
             .exec(cb)
     }
 }
-
-//暴露出去的方法
-module.exports = PostSchema
+var  Index = mongoose.model('article_table', IndexSchema); // 编译生成Movie 模型
+module.exports = Index

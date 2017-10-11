@@ -1,0 +1,15 @@
+extends layout
+ 
+block content
+ h1 #{title}
+ if error
+  h2 #{error}
+ if success
+  h2 #{success}
+ form(method='post' action='/upload' enctype='multipart/form-data')
+  input(type='file' name='up')
+  input(type='file' name='up')
+  input(type='file' name='up')
+  input(type='file' name='up')
+  input(type='file' name='file1')
+  input(type='submit')

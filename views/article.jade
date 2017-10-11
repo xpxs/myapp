@@ -1,0 +1,12 @@
+extends layout
+ 
+block content
+ div#content
+  h1 #{posts.title}
+  h2 作者: 
+   a(href="/user/#{posts.name}") #{posts.name}
+  h3 #{posts.time.minute}
+  div
+   :markdown
+   !{posts.post}
+ include footer.jade
