@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "forever ./bin/www"
   },
   "dependencies": {
     "body-parser": "~1.17.1",
@@ -14,6 +14,7 @@
     "debug": "~2.6.3",
     "express": "~4.15.2",
     "express-session": "^1.15.6",
+    "forever": "^0.15.3",
     "imageCenter": "file:../../../Desktop/imgCenter/imageCenter-0.1.1.tgz",
     "jade": "^1.11.0",
     "jstransformer-markdown": "^1.2.1",

@@ -1,6 +1,8 @@
 extends layout
  
 block content
+ if success
+  div #{success}
  each item in posts
   h1
    a(href="/user/#{item.name}/#{item.time.day}/#{item.title}") #{item.title}

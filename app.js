@@ -83,7 +83,6 @@ app.use(function(err, req, res, next) {
   // console.log("message",res.locals.message);
   // console.log("error",res.locals.error);
 });
-
 // app.disable('etag');
 
 module.exports = app; //导出app实例供其他模块调用

@@ -16,7 +16,11 @@ module.exports = function(app) {
       if (err) {
         console.log(err);
       }
-      res.render('index', { title: '首页', data: data }) //这里也可以json的格式直接返回数据res.json({data: users});
+      res.render('index', { 
+        title: '首页',
+        data: data,
+        error: req.flash('error'),
+      success: req.flash('success')}) //这里也可以json的格式直接返回数据res.json({data: users});
     })
   })
   // app.get('/user/:name', checkLogin); //限制登录能看
@@ -47,37 +51,69 @@ module.exports = function(app) {
   })
   // app.get('/user/:name/:day/:title', checkLogin); //限制登录能看
   app.get('/user/:name/:day/:title', function(req, res, next) { //用户
-    Posts.findByOne(req.params.name, req.params.day, req.params.title, function(err, data) {
-      if (err) {
-        req.flash('error', err);
-        return res.redirect('/');
+    Users.findById(req.params.name, function(err, user) {
+      if (!user) {
+        req.flash('error', '用户不存在!');
+        return res.redirect('/'); //用户不存在则跳转到主页
       }
-      data.post = markdown.toHTML(data.post); //markdown 转html
-      res.render('article', {
-        title: req.params.title,
+      Posts.findByOne(req.params.name, req.params.day, req.params.title, function(err, data) {
+        if (!data) {
+          req.flash('error', "没有该条数据");
+          return res.redirect('/user/' + req.params.name);
+        }
+        data.post = markdown.toHTML(data.post); //markdown 转html
+        res.render('article', {
+          title: req.params.title,
+          posts: data,
+          user: req.session.user,
+          success: req.flash('success').toString(),
+          error: req.flash('error').toString()
+        });
+      });
+    });
+  })
+  //编辑路由
+  app.get('/edit/:name/:day/:title', checkLogin);
+  app.get('/edit/:name/:day/:title', function(req, res) {
+    var currentUser = req.session.user;
+    Posts.edit(currentUser.name, req.params.day, req.params.title, function(err, data) {
+      if (!data) {
+        req.flash('error', "没有该条数据");
+        return res.redirect('/user/' + currentUser.name);
+      }
+      //data.post = markdown.toHTML(data.post); //markdown 转html
+      res.render('edit', {
+        title: '编辑',
         posts: data,
         user: req.session.user,
         success: req.flash('success').toString(),
         error: req.flash('error').toString()
       });
     });
-  })
-  app.get('/edit/:name/:day/:title', checkLogin);
-  app.get('/edit/:name/:day/:title', function(req, res) {
+  });
+  app.post('/edit/:name/:day/:title', checkLogin);
+  app.post('/edit/:name/:day/:title', function (req, res) {
     var currentUser = req.session.user;
-    Post.edit(currentUser.name, req.params.day, req.params.title, function(err, data) {
+    Posts.updateOne(currentUser.name, req.params.day, req.params.title, req.body.post, function (err) {
+      var url = encodeURI('/user/' + req.params.name + '/' + req.params.day + '/' + req.params.title);
       if (err) {
-        req.flash('error', err);
-        return res.redirect('back');
+        req.flash('error', err); 
+        return res.redirect(url);//出错！返回文章页
       }
-      data.post = markdown.toHTML(data.post); //markdown 转html
-      res.render('edit', {
-        title: '编辑',
-        post: data,
-        user: req.session.user,
-        success: req.flash('success').toString(),
-        error: req.flash('error').toString()
-      });
+      req.flash('success', '修改成功!');
+      res.redirect(url);//成功！返回文章页
+    });
+  });
+  app.get('/remove/:name/:day/:title', checkLogin);
+  app.get('/remove/:name/:day/:title', function (req, res) {
+    var currentUser = req.session.user;
+    Posts.removeOne(currentUser.name, req.params.day, req.params.title, function (err) {
+      if (err) {
+        req.flash('error', err); 
+        return res.redirect('back');//出错！
+      }
+      req.flash('success', '删除成功!');
+      res.redirect('/user/'+ req.params.name);//成功！个人中心
     });
   });
   //注册页面get请求

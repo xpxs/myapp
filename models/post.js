@@ -5,6 +5,7 @@ var PostSchema = new mongoose.Schema({
     time: Object,
     title: String,
     post: String,
+    comments: Array
 })
 
 //每次执行都会调用,时间更新操作
@@ -40,6 +41,39 @@ PostSchema.statics = {
     findByOne: function(name, day, title, cb) { //根据id查询单条数据
         return this
             .findOne({ 
+                'time.day':day,
+                'name': name,
+                'title':title
+                 })
+            .exec(cb)
+    },
+    edit: function(name, day, title, cb) { //修改文章
+        return this
+            .findOne({ 
+                'time.day':day,
+                'name': name,
+                'title':title
+                 })
+            .exec(cb)
+    },
+    updateOne: function(name, day, title, post, cb) { //更新文章
+        return this
+            .update(
+                {"title":title},
+                {$set : { 
+                'time.day':day,
+                'name': name,
+                'title':title,
+                'post':post
+                 },
+                 $push: {"comments": comment}
+                 },
+                 {upsert : true})
+            .exec(cb)
+    },
+    removeOne: function(name, day, title, cb) { //更新文章
+        return this
+            .remove({ 
                 'time.day':day,
                 'name': name,
                 'title':title

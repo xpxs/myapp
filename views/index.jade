@@ -9,15 +9,8 @@ block content
     a(href='index-2.jade/nose') 前端
     a(href='/design') 设计
  div#content
-  each item in posts
-   h1
-    a(href="/user/#{item.name}/#{item.time.day}/#{item.title}") #{item.title}
-   h2 作者: 
-    a(href="/user/#{item.name}") #{item.name}
-   h3 #{item.time.minute}
-   div
-    :markdown
-    !{item.post}
+    if error
+      h2 #{error}
  include footer.jade
 
 
