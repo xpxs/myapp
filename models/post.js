@@ -5,6 +5,7 @@ var PostSchema = new mongoose.Schema({
     time: Object,
     title: String,
     post: String,
+    tags: String,
     comments: Array
 })
 
@@ -27,13 +28,41 @@ PostSchema.pre('save', function(next) {
 //查询的静态方法
 PostSchema.statics = {
     fetch: function(cb) { //查询所有数据
-        //console.log('cb',cb);
         return this
             .find()
             //.sort('paw') //排序
             .exec(cb) //回调
     },
-    findById: function(title, cb) { //根据id查询单条数据
+    getArchive:function(cb){
+        return this
+            .find({},{
+                name: 1,
+                time: 1,
+                title: 1
+            })
+            .sort('-time.day')
+            .exec(cb) //回调
+    },
+    getAll: function(cb) { //查询所有数据条数
+        return this
+            .find()
+            .count()
+            .exec(cb) //回调
+    },
+    getTags: function(cb) { //查询所有数据条数
+        return this
+            .distinct('tags')
+            .exec(cb) //回调
+    },
+    getTen: function(page, cb) { //查询十条数据
+        return this
+            .find()
+            .limit(10)
+            .skip((page - 1)*10)
+            .sort('-time.day')
+            .exec(cb) //回调
+    },
+    findByTitle: function(title, cb) { //根据id查询单条数据
         return this
             .findOne({ title: title })
             .exec(cb)
@@ -65,9 +94,7 @@ PostSchema.statics = {
                 'name': name,
                 'title':title,
                 'post':post
-                 },
-                 $push: {"comments": comment}
-                 },
+                 }},
                  {upsert : true})
             .exec(cb)
     },
@@ -83,6 +110,17 @@ PostSchema.statics = {
     findByUser: function(name, cb) { //根据用户查该用户所有数据
         return this
             .find({ 'name': name })
+            .exec(cb)
+    },
+    updateComment: function(name, day, title, comment, cb) { //更新留言
+        return this
+            .update(
+                {"title":title,
+                  'name': name,
+                'time.day':day},
+                {$push: {"comments": comment}
+                 },
+                 {upsert : true})
             .exec(cb)
     }
 }

@@ -1,6 +1,10 @@
 extends layout
  
 block content
+ if success
+  div #{success}
+ if error
+  div #{error}
  div#content
   h1 #{posts.title}
   div
@@ -11,8 +15,35 @@ block content
     a(href="/remove/#{posts.name}/#{posts.time.day}/#{posts.title}") 删除
   h2 作者: 
    a(href="/user/#{posts.name}") #{posts.name}
-  h3 #{posts.time.minute}
+  h3 日期: #{posts.time.minute}
+  if posts.tags
+   h4
+    a(href="/tags/#{posts.tags}") #{posts.tags}
   div
    :markdown
    !{posts.post}
+  div 留言项目：
+  each item in posts.comments
+   div
+    p
+     a(href="#{item.website}") #{item.name}
+     span 于#{item.time}回复
+    p #{item.content}
+  form(method="post")
+   if user
+    span 姓名:
+    input(type="text" name="name" value="#{user.name}")
+    span 邮箱:
+    input(type="text" name="email" value="#{user.email}")
+    span 网址:
+    input(type="text" name="website" value="/user/#{user.name}")
+   else
+    span 姓名:
+    input(type="text" name="name" value="")
+    span 邮箱:
+    input(type="text" name="email" value="")
+    span 网址:
+    input(type="text" name="website" value="http://")
+   textarea(name="content" rows="5" cols="80")
+   input(type="submit" value="留言")
  include footer.jade

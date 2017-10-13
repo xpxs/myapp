@@ -5,12 +5,21 @@ block content
   div.logo 月半小胖博客中心#{title}
   nav
     a(href='/') 首页
-    a(href='/blog') 博客
+    a(href='/post') 发表文章
     a(href='index-2.jade/nose') 前端
     a(href='/design') 设计
+    a(title="存档" href="/archive") 存档
  div#content
     if error
       h2 #{error}
+  each item in posts
+   div
+     h3
+      a(href="/user/#{item.name}/#{item.time.day}/#{item.title}") #{item.title}
+     p 作者: 
+      a(href="/user/#{item.name}") #{item.name}
+     p #{item.time.minute}
+  include page.jade
  include footer.jade
 
 
