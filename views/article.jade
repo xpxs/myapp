@@ -17,8 +17,8 @@ block content
    a(href="/user/#{posts.name}") #{posts.name}
   h3 日期: #{posts.time.minute}
   if posts.tags
-   h4
-    a(href="/tags/#{posts.tags}") #{posts.tags}
+   each item in posts.tags
+    a(href="/tags/#{item}") #{item}
   div
    :markdown
    !{posts.post}

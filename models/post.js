@@ -5,7 +5,7 @@ var PostSchema = new mongoose.Schema({
     time: Object,
     title: String,
     post: String,
-    tags: String,
+    tags: Array,
     comments: Array
 })
 
@@ -36,9 +36,9 @@ PostSchema.statics = {
     getArchive:function(cb){
         return this
             .find({},{
-                name: 1,
-                time: 1,
-                title: 1
+                "name": 1,
+                "time": 1,
+                "title": 1
             })
             .sort('-time.day')
             .exec(cb) //回调
@@ -49,9 +49,21 @@ PostSchema.statics = {
             .count()
             .exec(cb) //回调
     },
-    getTags: function(cb) { //查询所有数据条数
+    getTags: function(cb) { //查询所有标签
         return this
             .distinct('tags')
+            .exec(cb) //回调
+    },
+    getTag: function(tag, cb) { //返回含有特定标签的所有文章
+        return this
+            .find({
+                "tags": tag
+              }, {
+                "name": 1,
+                "time": 1,
+                "title": 1
+              })
+            .sort('-time.day')
             .exec(cb) //回调
     },
     getTen: function(page, cb) { //查询十条数据

@@ -5,6 +5,10 @@ block content
   form(method='post')
    span 标题
    input(type='text' name='title' value='#{posts.title}' disabled='true')
+   span 标签
+   input(type='text' name='tag1' value='#{posts.tags[0]}' disabled='true')
+   input(type='text' name='tag2' value='#{posts.tags[1]}' disabled='true')
+   input(type='text' name='tag3' value='#{posts.tags[2]}' disabled='true')
    span 正文
    textarea(name="post" rows="20" cols="100") 
     :markdown

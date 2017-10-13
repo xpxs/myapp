@@ -1,0 +1,15 @@
+extends layout
+block content
+ h1 #{title}
+ ul
+  - var lastYear = 0
+  each item in posts
+   if (lastYear != item.time.year)
+    li
+     h3 #{item.time.year}
+   - lastYear = item.time.year //赋值要加短横线
+   li
+    time #{item.time.day}
+   li
+    a(href="/user/#{item.name}/#{item.time.day}/#{item.title}") #{item.title}
+  include footer.jade

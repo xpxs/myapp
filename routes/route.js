@@ -283,10 +283,12 @@ module.exports = function(app) {
       return res.redirect('/post'); //返回注册页
     }
     var currentUser = req.session.user,
+      tags = [req.body.tag1, req.body.tag2, req.body.tag3],
       post = new Posts({
         name: currentUser.name,
         title: trim(req.body.title),
-        post: trim(req.body.post)
+        post: trim(req.body.post),
+        tags:tags
       });
     Posts.findByTitle(req.body.title, function(err, title) {
       if (title) {
@@ -351,13 +353,14 @@ module.exports = function(app) {
   //获取文章标签
   app.get('/tags', function (req, res) {
     Posts.getTags(function (err, data) {
+      console.log("data",data)
       if (err) {
         req.flash('error', err); 
         return res.redirect('/');
       }
       res.render('tags', {
         title: '标签',
-        posts: posts,
+        posts: data,
         user: req.session.user,
         success: req.flash('success').toString(),
         error: req.flash('error').toString()
@@ -365,6 +368,23 @@ module.exports = function(app) {
     });
   });
 
+  //获得tag标签下的所有页面
+  app.get('/tags/:tag', function (req, res) {
+    Posts.getTag(req.params.tag, function (err, data) {
+      console.log("data",data)
+      if (err) {
+        req.flash('error',err); 
+        return res.redirect('/');
+      }
+      res.render('tag', {
+        title: 'TAG:' + req.params.tag,
+        posts: data,
+        user: req.session.user,
+        success: req.flash('success').toString(),
+        error: req.flash('error').toString()
+      });
+    });
+  });
   //未登录函数
   function checkLogin(req, res, next) {
     if (!req.session.user) {
