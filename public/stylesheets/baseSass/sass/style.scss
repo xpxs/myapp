@@ -1,0 +1,90 @@
+/** 全局定义颜色样式 **/
+$mainColor: #f60;
+$pageColor: #333;
+$bottomColor :#ddd;
+$solid: solid;
+$dotted: dotted;
+$pageWidth: 1000px;
+
+body{
+ background: #f3f3f3;
+ font:12px/1.5 "Microsoft YaHei",YaHei,tahoma,arial,"Hiragino Sans GB";
+}
+*{padding: 0;margin: 0;}
+a {
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;  
+  -o-transition: all 0.5s;  
+  transition: all 0.5s;
+  color: $pageColor;
+  text-decoration: none;
+  &:hover {
+    color: $mainColor;
+  }
+}
+.wrap{
+ position: relative;
+ width: $pageWidth;
+ margin: 0 auto;
+}
+#main{
+ height: 200px;
+ position: relative;
+ background-color: $mainColor;
+ text-align: center;
+ .logo{
+    margin-top:20px; 
+    display: inline-block;
+    height: 160px;
+    width: 160px;
+    img{
+     margin-top: 80px;
+     width: 120px;
+    }
+  }
+}
+.nav{
+ text-align: center;
+ display: block;
+ border-bottom:{
+  color: $bottomColor;
+  style: $solid;
+  width:1px;
+ }
+ li{
+  line-height: 42px;
+  margin-top: 10px;
+  font-size: 14px;  
+  padding-right: 20px;
+  padding-left: 20px;
+  display: inline-block;
+  position: relative;
+  &:hover{
+   cursor:pointer;
+   a{
+    color: $mainColor;
+   }
+   &:before{
+    width:100%;
+   }
+  }
+  &:before{
+   -webkit-transition: all 0.5s;
+   -moz-transition: all 0.5s;  
+   -o-transition: all 0.5s;  
+   transition: all 0.5s;
+   content: "";
+   position: absolute;
+   bottom: -1px;
+   left: 0;
+   width:0;
+   z-index: 9999;
+   display: block;
+   background-color: $mainColor;
+   height: 2px;
+   }
+  }
+ }
+#footer{
+ color: #999;
+}

@@ -1,3 +1,4 @@
+//留言板块
 var    mongoose = require('mongoose');
 //申明一个mongoose对象
 var CommentSchema = new mongoose.Schema({

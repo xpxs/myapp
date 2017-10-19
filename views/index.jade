@@ -1,17 +1,8 @@
 
 extends layout
 block content
- div#main
-  div.logo 月半小胖博客中心#{title}
-  nav
-    a(href='/') 首页
-    a(href='/post') 发表文章
-    a(href='index-2.jade/nose') 前端
-    a(href='/design') 设计
-    a(title="存档" href="/archive") 存档
- div#content
-    if error
-      h2 #{error}
+ include nav.jade
+ div.wrap#content
   each item in posts
    div
      h3
