@@ -15,7 +15,6 @@
     "express": "~4.15.2",
     "express-session": "^1.15.6",
     "forever": "^0.15.3",
-    "imageCenter": "file:../../../Desktop/imgCenter/imageCenter-0.1.1.tgz",
     "jade": "^1.11.0",
     "jstransformer-markdown": "^1.2.1",
     "markdown": "^0.5.0",
