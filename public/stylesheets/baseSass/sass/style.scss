@@ -1,14 +1,15 @@
 /** 全局定义颜色样式 **/
 $mainColor: #f60;
 $pageColor: #333;
-$bottomColor :#ddd;
+$borderColor :#ddd;
 $solid: solid;
 $dotted: dotted;
-$pageWidth: 1000px;
+$pageWidth: 1170px;
+$noteColor:#888;
 
 body{
  background: #f3f3f3;
- font:12px/1.5 "Microsoft YaHei",YaHei,tahoma,arial,"Hiragino Sans GB";
+ font:"Microsoft YaHei",YaHei,tahoma,arial,"Hiragino Sans GB";
 }
 *{padding: 0;margin: 0;}
 a {
@@ -21,11 +22,6 @@ a {
   &:hover {
     color: $mainColor;
   }
-}
-.wrap{
- position: relative;
- width: $pageWidth;
- margin: 0 auto;
 }
 #main{
  height: 200px;
@@ -47,7 +43,7 @@ a {
  text-align: center;
  display: block;
  border-bottom:{
-  color: $bottomColor;
+  color: $borderColor;
   style: $solid;
   width:1px;
  }
@@ -55,14 +51,17 @@ a {
   line-height: 42px;
   margin-top: 10px;
   font-size: 14px;  
-  padding-right: 20px;
-  padding-left: 20px;
+  padding-right: 10px;
+  padding-left: 10px;
   display: inline-block;
   position: relative;
   &:hover{
    cursor:pointer;
    a{
     color: $mainColor;
+    &:hover{
+      background-color:none;
+    }
    }
    &:before{
     width:100%;
@@ -85,6 +84,21 @@ a {
    }
   }
  }
+#content{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  span{
+    color: $noteColor;
+  }
+  span.line{
+    height: 10px;
+    display: inline-block;
+    border-right: 1px $solid $borderColor;
+    margin-right: 8px;
+    margin-left: 8px;
+  }
+}
+/**网页底部样式**/
 #footer{
  color: #999;
 }

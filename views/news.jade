@@ -1,0 +1,16 @@
+extends layout
+ 
+block content
+  include nav.jade
+  div.container#content
+    div.row
+      div.col-md-8
+        h1 #{news.articleTitle}
+        p 
+          span 来源: #{news.articleBorn}
+          span.line
+          span 时间: #{news.articleTime}
+          span.line
+          span 阅读量: #{news.articleRead}
+        p #{news.articleText}
+ include footer.jade

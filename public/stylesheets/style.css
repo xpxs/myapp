@@ -1,78 +1,29 @@
-body {
-  background: #f3f3f3;
-  font: 12px/1.5 "Microsoft YaHei",YaHei,tahoma,arial,"Hiragino Sans GB"; }
+@charset "UTF-8";
+/** 全局定义颜色样式 **/
+body { background: #f3f3f3; font: "Microsoft YaHei",YaHei,tahoma,arial,"Hiragino Sans GB"; }
 
-* {
-  padding: 0;
-  margin: 0; }
+* { padding: 0; margin: 0; }
 
-.wrap {
-  position: relative;
-  width: 1000px;
-  margin: 0 auto; }
+a { -webkit-transition: all 0.5s; -moz-transition: all 0.5s; -o-transition: all 0.5s; transition: all 0.5s; color: #333; text-decoration: none; }
+a:hover { color: #f60; }
 
-#main {
-  height: 200px;
-  position: relative;
-  background-color: #f60;
-  text-align: center; }
-  #main .logo {
-    margin-top: 20px;
-    display: inline-block;
-    height: 160px;
-    width: 160px; }
-    #main .logo img {
-      margin-top: 80px;
-      width: 120px; }
+#main { height: 200px; position: relative; background-color: #f60; text-align: center; }
+#main .logo { margin-top: 20px; display: inline-block; height: 160px; width: 160px; }
+#main .logo img { margin-top: 80px; width: 120px; }
 
-.nav {
-  text-align: center;
-  display: block;
-  border-bottom-color: #ddd;
-  border-bottom-style: solid;
-  border-bottom-width: 1px; }
-  .nav li {
-    line-height: 42px;
-    margin-top: 10px;
-    font-size: 14px;
-    padding-right: 20px;
-    padding-left: 20px;
-    display: inline-block;
-    position: relative; }
-    .nav li:hover {
-      cursor: pointer; }
-      .nav li:hover a {
-        color: #f60; }
-      .nav li:hover:before {
-        width: 100%; }
-    .nav li:before {
-      -webkit-transition: all 0.5s;
-      -moz-transition: all 0.5s;
-      -o-transition: all 0.5s;
-      transition: all 0.5s;
-      content: "";
-      position: absolute;
-      bottom: -1px;
-      left: 0;
-      width: 0;
-      z-index: 9999;
-      display: block;
-      background-color: #f60;
-      height: 2px; }
+.nav { text-align: center; display: block; border-bottom-color: #ddd; border-bottom-style: solid; border-bottom-width: 1px; }
+.nav li { line-height: 42px; margin-top: 10px; font-size: 14px; padding-right: 10px; padding-left: 10px; display: inline-block; position: relative; }
+.nav li:hover { cursor: pointer; }
+.nav li:hover a { color: #f60; }
+.nav li:hover a:hover { background-color: none; }
+.nav li:hover:before { width: 100%; }
+.nav li:before { -webkit-transition: all 0.5s; -moz-transition: all 0.5s; -o-transition: all 0.5s; transition: all 0.5s; content: ""; position: absolute; bottom: -1px; left: 0; width: 0; z-index: 9999; display: block; background-color: #f60; height: 2px; }
 
-.navbar {
-  border-bottom-color: #f60;
-  border-bottom-style: solid;
-  border-bottom-width: 1px; }
+#content { margin-top: 20px; margin-bottom: 20px; }
+#content span { color: #888; }
+#content span.line { height: 10px; display: inline-block; border-right: 1px solid #ddd; margin-right: 8px; margin-left: 8px; }
 
-a {
-  -webkit-transition: all 0.5s;
-  -moz-transition: all 0.5s;
-  -o-transition: all 0.5s;
-  transition: all 0.5s;
-  color: #333;
-  text-decoration: none; }
-  a:hover {
-    color: #f60; }
+/**网页底部样式**/
+#footer { color: #999; }
 
 /*# sourceMappingURL=style.css.map */

@@ -6,6 +6,7 @@ var markdown = require('markdown').markdown;
 var Index = require('../models/index'); //导入模型数据模块
 var Users = require('../models/users'); //导入模型数据模块
 var Posts = require('../models/post'); //导入模型数据模块
+var  News = require('../models/article'); //导入模型数据模块
 
 var upload = require('../models/upload'); //导入图片上传文件模块
 
@@ -21,13 +22,23 @@ module.exports = function(app) {
     Posts.getTen(page, function (err, data) {
       if (err) {
         data = [];
+      }
+      g.posts = data;
+    });
+    News.getNewsAll(function (err, total){
+      g.NewsTotal = total;
+    });
+    News.getNewsTwenty(page, function (err, data) {
+      if (err) {
+        data = [];
       } 
       res.render('index', {
         title: '主页',
-        posts: data,
+        news: data,
+        posts: g.posts,
         page: page,
         isFirstPage: (page - 1) == 0,
-        isLastPage: ((page - 1) * 10 + data.length) == g.total,
+        isLastPage: ((page - 1) * 20 + data.length) == g.NewsTotal,
         user: req.session.user,
         success: req.flash('success').toString(),
         error: req.flash('error').toString()
@@ -86,6 +97,24 @@ module.exports = function(app) {
         });
       });
     });
+  })
+
+  //查看新闻
+  app.get('/news/:title', function(req, res, next) { //用户
+      News.getNewsTitle(req.params.title, function(err, data) {
+        if (!data) {
+          req.flash('error', "没有该文章");
+          return res.redirect('/news/' + req.params.title);
+        }
+        // data.articleText = markdown.toHTML(data.articleText); //markdown 转html
+        res.render('news', {
+          title: req.params.title,
+          news: data,
+          user: req.session.user,
+          success: req.flash('success').toString(),
+          error: req.flash('error').toString()
+        });
+      });
   })
 
   //针对文章留言

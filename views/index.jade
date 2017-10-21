@@ -2,14 +2,33 @@
 extends layout
 block content
  include nav.jade
- div.wrap#content
-  each item in posts
-   div
-     h3
-      a(href="/user/#{item.name}/#{item.time.day}/#{item.title}") #{item.title}
-     p 作者: 
-      a(href="/user/#{item.name}") #{item.name}
-     p #{item.time.minute}
+ div.container#content
+  div.row
+   div.col-md-9
+    h3 前端技术
+    each item in posts
+     div
+       h3
+        a(href="/user/#{item.name}/#{item.time.day}/#{item.title}") #{item.title}
+       p
+       span 作者: 
+        a(href="/user/#{item.name}") #{item.name}
+       span.line
+       span 时间: #{item.time.minute}
+       span.line
+       span 留言:
+        a(href="/user/#{item.name}/#{item.time.day}/#{item.title}") #{item.time.minute}
+   div.col-md-3
+    h3 科技焦点
+    each item in news
+     div
+      h3
+       a(href="/news/#{item.articleTitle}") #{item.articleTitle}
+      p 
+       span 来源: #{item.articleBorn}
+       span.line
+       span 留言: #{item.articleRead}
+
   include page.jade
  include footer.jade
 
