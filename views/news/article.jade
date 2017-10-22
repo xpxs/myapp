@@ -1,7 +1,7 @@
-extends layout
+extends ../layout
  
 block content
-  include nav.jade
+  include ../nav.jade
   div.container#content
     div.row
       div.col-md-8
@@ -13,4 +13,4 @@ block content
           span.line
           span 阅读量: #{news.articleRead}
         p #{news.articleText}
- include footer.jade
+ include ../footer.jade

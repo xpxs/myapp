@@ -34,6 +34,13 @@ PostSchema.statics = {
             //.sort('paw') //排序
             .exec(cb) //回调
     },
+    getPostTen: function(cb) { //查询所有数据
+        return this
+            .find()
+            .limit(10)
+            //.sort('paw') //排序
+            .exec(cb) //回调
+    },
     getArchive:function(cb){
         return this
             .find({},{

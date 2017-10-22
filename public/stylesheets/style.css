@@ -20,6 +20,9 @@ a:hover { color: #f60; }
 .nav li:before { -webkit-transition: all 0.5s; -moz-transition: all 0.5s; -o-transition: all 0.5s; transition: all 0.5s; content: ""; position: absolute; bottom: -1px; left: 0; width: 0; z-index: 9999; display: block; background-color: #f60; height: 2px; }
 
 #content { margin-top: 20px; margin-bottom: 20px; }
+#content h3 { margin-bottom: 20px; }
+#content .list-unstyled li { height: auto; }
+#content li { height: 16px; overflow: hidden; margin-bottom: 15px; }
 #content span { color: #888; }
 #content span.line { height: 10px; display: inline-block; border-right: 1px solid #ddd; margin-right: 8px; margin-left: 8px; }
 

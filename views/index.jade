@@ -4,11 +4,11 @@ block content
  include nav.jade
  div.container#content
   div.row
-   div.col-md-9
-    h3 前端技术
+   div.col-md-4
+    h3 技术博客
     each item in posts
      div
-       h3
+       h5
         a(href="/user/#{item.name}/#{item.time.day}/#{item.title}") #{item.title}
        p
        span 作者: 
@@ -18,18 +18,22 @@ block content
        span.line
        span 留言:
         a(href="/user/#{item.name}/#{item.time.day}/#{item.title}") #{item.time.minute}
-   div.col-md-3
+   div.col-md-4
     h3 科技焦点
+    ul
+    each item in articles
+     li
+      a(href="/news/list/#{item.articleTitle}") #{item.articleTitle}
+    div
+     a.btn.btn-default(href="/news/list") 查看更多
+   div.col-md-4
+    h3 热点新闻
+    ul
     each item in news
-     div
-      h3
-       a(href="/news/#{item.articleTitle}") #{item.articleTitle}
-      p 
-       span 来源: #{item.articleBorn}
-       span.line
-       span 留言: #{item.articleRead}
-
-  include page.jade
+     li
+      a(href="/news/list/#{item.newsTitle}") #{item.newsTitle}
+    div
+     a.btn.btn-default(href="/news/list") 查看更多
  include footer.jade
 
 

@@ -87,6 +87,19 @@ a {
 #content{
   margin-top: 20px;
   margin-bottom: 20px;
+  h3{
+    margin-bottom: 20px;
+  }
+  .list-unstyled{
+    li{
+      height: auto;
+    }
+  }
+  li{
+    height: 18px;
+    overflow: hidden;
+    margin-bottom: 15px;
+  }
   span{
     color: $noteColor;
   }

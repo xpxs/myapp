@@ -6,44 +6,54 @@ var markdown = require('markdown').markdown;
 var Index = require('../models/index'); //导入模型数据模块
 var Users = require('../models/users'); //导入模型数据模块
 var Posts = require('../models/post'); //导入模型数据模块
-var  News = require('../models/article'); //导入模型数据模块
+var Articles = require('../models/article'); //导入模型数据模块
+var  News = require('../models/news'); //导入模型数据模块
 
 var upload = require('../models/upload'); //导入图片上传文件模块
-
 module.exports = function(app) {
   //主页请求
   app.get(['/', '/index'], function(req, res, next) { //主页路由
-    var page = req.query.p ? parseInt(req.query.p) : 1;
-    //检查用户是否存在
-    var g = {};
-    Posts.getAll(function (err, total){
-      g.total = total;
+    Articles.getArticleTen(function (err, articles){
+      if (err) {data = [];}
+      Posts.getPostTen(function (err, posts) {
+        if (err) {data = [];}
+        News.getNewsTen(function (err, news){
+          if (err) {data = [];}
+          res.render('index', {
+            title: '主页',
+            news:news,
+            articles: articles,
+            posts: posts,
+            user: req.session.user,
+            success: req.flash('success').toString(),
+            error: req.flash('error').toString()
+          })
+        })
+      })
     })
-    Posts.getTen(page, function (err, data) {
-      if (err) {
-        data = [];
-      }
-      g.posts = data;
-    });
-    News.getNewsAll(function (err, total){
-      g.NewsTotal = total;
-    });
-    News.getNewsTwenty(page, function (err, data) {
-      if (err) {
-        data = [];
-      } 
-      res.render('index', {
-        title: '主页',
-        news: data,
-        posts: g.posts,
-        page: page,
-        isFirstPage: (page - 1) == 0,
-        isLastPage: ((page - 1) * 20 + data.length) == g.NewsTotal,
-        user: req.session.user,
-        success: req.flash('success').toString(),
-        error: req.flash('error').toString()
-      });
-    });
+    // var page = req.query.p ? parseInt(req.query.p) : 1;
+    // Posts.getAll(function (err, total){
+    //   g.total = total;
+    // })
+    // News.getNewsAll(function (err, total){
+    //   g.NewsTotal = total;
+    // });
+    // News.getNewsTwenty(page, function (err, data) {
+    //   if (err) {
+    //     data = [];
+    //   } 
+    //   res.render('index', {
+    //     title: '主页',
+    //     news: data,
+    //     posts: g.posts,
+    //     page: page,
+    //     isFirstPage: (page - 1) == 0,
+    //     isLastPage: ((page - 1) * 20 + data.length) == g.NewsTotal,
+    //     user: req.session.user,
+    //     success: req.flash('success').toString(),
+    //     error: req.flash('error').toString()
+    //   });
+    // });
   })
 
   //查看该用户下的所有文章
@@ -63,7 +73,7 @@ module.exports = function(app) {
           item.post = markdown.toHTML(item.post); //markdown 转html
         });
 
-        res.render('user', {
+        res.render('post/user', {
           title: user.name,
           posts: data,
           user: req.session.user,
@@ -88,7 +98,7 @@ module.exports = function(app) {
           return res.redirect('/user/' + req.params.name);
         }
         data.post = markdown.toHTML(data.post); //markdown 转html
-        res.render('article', {
+        res.render('post/article', {
           title: req.params.title,
           posts: data,
           user: req.session.user,
@@ -98,18 +108,39 @@ module.exports = function(app) {
       });
     });
   })
-
+  app.get('/news/list',function(req, res ,next) {
+    var page = req.query.p ? parseInt(req.query.p) : 1;
+    var g = {}
+    Articles.getArticleAll(function (err, total){
+      g.ArticleTotal = total;
+    });
+    Articles.getArticleTwenty(page, function (err, data) {
+      if (err) {
+        data = [];
+      } 
+      res.render('news/list', {
+        title: '主页',
+        articles: data,
+        page: page,
+        isFirstPage: (page - 1) == 0,
+        isLastPage: ((page - 1) * 20 + data.length) == g.ArticleTotal,
+        user: req.session.user,
+        success: req.flash('success').toString(),
+        error: req.flash('error').toString()
+      });
+    });
+  })
   //查看新闻
-  app.get('/news/:title', function(req, res, next) { //用户
-      News.getNewsTitle(req.params.title, function(err, data) {
+  app.get('/news/list/:title', function(req, res, next) { //用户
+      Articles.getArticleTitle(req.params.title, function(err, data) {
         if (!data) {
           req.flash('error', "没有该文章");
           return res.redirect('/news/' + req.params.title);
         }
         // data.articleText = markdown.toHTML(data.articleText); //markdown 转html
-        res.render('news', {
+        res.render('news/article', {
           title: req.params.title,
-          news: data,
+          articles: data,
           user: req.session.user,
           success: req.flash('success').toString(),
           error: req.flash('error').toString()
@@ -150,7 +181,7 @@ module.exports = function(app) {
         return res.redirect('/user/' + currentUser.name);
       }
       //data.post = markdown.toHTML(data.post); //markdown 转html
-      res.render('edit', {
+      res.render('post/edit', {
         title: '编辑',
         posts: data,
         user: req.session.user,
@@ -293,7 +324,7 @@ module.exports = function(app) {
   //文章列表get请求
   app.get('/post', checkLogin);
   app.get('/post', function(req, res) {
-    res.render('post', {
+    res.render('post/post', {
       title: '发表',
       error: req.flash('error').toString(),
       success: req.flash('success').toString(),
@@ -387,7 +418,7 @@ module.exports = function(app) {
         req.flash('error', err); 
         return res.redirect('/');
       }
-      res.render('tags', {
+      res.render('post/tags', {
         title: '标签',
         posts: data,
         user: req.session.user,
@@ -405,7 +436,7 @@ module.exports = function(app) {
         req.flash('error',err); 
         return res.redirect('/');
       }
-      res.render('tag', {
+      res.render('post/tag', {
         title: 'TAG:' + req.params.tag,
         posts: data,
         user: req.session.user,

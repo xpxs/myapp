@@ -1,4 +1,4 @@
-extends layout
+extends ../layout
 block content
  h1 #{title}
  ul
@@ -12,4 +12,4 @@ block content
     time #{item.time.day}
    li
     a(href="/user/#{item.name}/#{item.time.day}/#{item.title}") #{item.title}
-  include footer.jade
+  include ../footer.jade
