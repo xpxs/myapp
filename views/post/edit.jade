@@ -1,17 +1,24 @@
 extends ../layout
  
 block content
- div#content
-  form(method='post')
-   span 标题
-   input(type='text' name='title' value='#{posts.title}' disabled='true')
-   span 标签
-   input(type='text' name='tag1' value='#{posts.tags[0]}' disabled='true')
-   input(type='text' name='tag2' value='#{posts.tags[1]}' disabled='true')
-   input(type='text' name='tag3' value='#{posts.tags[2]}' disabled='true')
-   span 正文
-   textarea(name="post" rows="20" cols="100") 
-    :markdown
-    !{posts.post}
-   input(type="submit" value="保存修改")
+ include ../nav.jade
+ div.container#content
+  div.row
+    div.col-md-8.col-md-offset-2
+      form.form-inline(method='post')
+        div.form-group.form-title
+          label.mr5 标题:
+          input.form-control(type='text' name='title' value='#{posts.title}' disabled='true')
+        div.form-group
+          label.mr5 标签:
+          input.form-control(type='text' name='tag1' value='#{posts.tags[0]}' disabled='true')
+          input.form-control(type='text' name='tag2' value='#{posts.tags[1]}' disabled='true')
+          input.form-control(type='text' name='tag3' value='#{posts.tags[2]}' disabled='true')
+        div.form-group
+          label.mr5 正文:
+          textarea.form-control(name="post" rows="20" cols="100") 
+            :markdown
+            !{posts.post}
+        div.form-group
+          input.btn.btn-default(type="submit" value="保存修改")
  include ../footer.jade

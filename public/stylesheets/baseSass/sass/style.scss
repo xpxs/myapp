@@ -11,6 +11,14 @@ body{
  background: #f3f3f3;
  font:"Microsoft YaHei",YaHei,tahoma,arial,"Hiragino Sans GB";
 }
+input{
+  &:visited{
+    border-color: $mainColor;
+  }
+  &:focus{
+    border-color: $mainColor;
+  }
+}
 *{padding: 0;margin: 0;}
 a {
   -webkit-transition: all 0.5s;
@@ -19,6 +27,41 @@ a {
   transition: all 0.5s;
   color: $pageColor;
   text-decoration: none;
+  &:hover {
+    color: $mainColor;
+  }
+}
+.mr5{margin-right: 5px;}
+.mt15{
+  margin-top:15px;
+}
+.form-inline{
+  .form-title{
+      display: block;
+      .form-control{
+        display: block;
+        width: 100%;
+      }
+    }
+  .form-group{
+    margin-right: 20px;
+    margin-top: 15px;
+    label{
+      margin-right: 5px;
+      color: #999;
+      font-weight: normal;
+    }
+    .form-control{
+      margin-right: 10px;
+      &:focus{
+        border-color: rgba(255, 102, 0, .5);
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(255, 195, 160, .6);
+                box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(255, 195, 160, .6);
+      }
+    }
+  }
+}
+.btn-default{
   &:hover {
     color: $mainColor;
   }
@@ -51,16 +94,17 @@ a {
   line-height: 42px;
   margin-top: 10px;
   font-size: 14px;  
-  padding-right: 10px;
-  padding-left: 10px;
   display: inline-block;
   position: relative;
+  a{
+    padding:10px 25px;
+  }
   &:hover{
    cursor:pointer;
    a{
     color: $mainColor;
     &:hover{
-      background-color:none;
+      background-color:transparent;
     }
    }
    &:before{
@@ -88,6 +132,10 @@ a {
   margin-top: 20px;
   margin-bottom: 20px;
   h3{
+    margin-bottom: 20px;
+  }
+  .article-box{
+    margin-top: 20px;
     margin-bottom: 20px;
   }
   .list-unstyled{

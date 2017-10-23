@@ -2,27 +2,45 @@
 /** 全局定义颜色样式 **/
 body { background: #f3f3f3; font: "Microsoft YaHei",YaHei,tahoma,arial,"Hiragino Sans GB"; }
 
+input:visited { border-color: #f60; }
+input:focus { border-color: #f60; }
+
 * { padding: 0; margin: 0; }
 
 a { -webkit-transition: all 0.5s; -moz-transition: all 0.5s; -o-transition: all 0.5s; transition: all 0.5s; color: #333; text-decoration: none; }
 a:hover { color: #f60; }
+
+.mr5 { margin-right: 5px; }
+
+.mt15 { margin-top: 15px; }
+
+.form-inline .form-title { display: block; }
+.form-inline .form-title .form-control { display: block; width: 100%; }
+.form-inline .form-group { margin-right: 20px; margin-top: 15px; }
+.form-inline .form-group label { margin-right: 5px; color: #999; font-weight: normal; }
+.form-inline .form-group .form-control { margin-right: 10px; }
+.form-inline .form-group .form-control:focus { border-color: rgba(255, 102, 0, 0.5); -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 195, 160, 0.6); box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 195, 160, 0.6); }
+
+.btn-default:hover { color: #f60; }
 
 #main { height: 200px; position: relative; background-color: #f60; text-align: center; }
 #main .logo { margin-top: 20px; display: inline-block; height: 160px; width: 160px; }
 #main .logo img { margin-top: 80px; width: 120px; }
 
 .nav { text-align: center; display: block; border-bottom-color: #ddd; border-bottom-style: solid; border-bottom-width: 1px; }
-.nav li { line-height: 42px; margin-top: 10px; font-size: 14px; padding-right: 10px; padding-left: 10px; display: inline-block; position: relative; }
+.nav li { line-height: 42px; margin-top: 10px; font-size: 14px; display: inline-block; position: relative; }
+.nav li a { padding: 10px 25px; }
 .nav li:hover { cursor: pointer; }
 .nav li:hover a { color: #f60; }
-.nav li:hover a:hover { background-color: none; }
+.nav li:hover a:hover { background-color: transparent; }
 .nav li:hover:before { width: 100%; }
 .nav li:before { -webkit-transition: all 0.5s; -moz-transition: all 0.5s; -o-transition: all 0.5s; transition: all 0.5s; content: ""; position: absolute; bottom: -1px; left: 0; width: 0; z-index: 9999; display: block; background-color: #f60; height: 2px; }
 
 #content { margin-top: 20px; margin-bottom: 20px; }
 #content h3 { margin-bottom: 20px; }
+#content .article-box { margin-top: 20px; margin-bottom: 20px; }
 #content .list-unstyled li { height: auto; }
-#content li { height: 16px; overflow: hidden; margin-bottom: 15px; }
+#content li { height: 18px; overflow: hidden; margin-bottom: 15px; }
 #content span { color: #888; }
 #content span.line { height: 10px; display: inline-block; border-right: 1px solid #ddd; margin-right: 8px; margin-left: 8px; }
 

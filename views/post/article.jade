@@ -1,49 +1,62 @@
 extends ../layout
  
 block content
- if success
-  div #{success}
- if error
-  div #{error}
- div#content
-  h1 #{posts.title}
-  div
-  if (user && user.name == posts.name)
-   span
-    a(href="/edit/#{posts.name}/#{posts.time.day}/#{posts.title}") 编辑
-   span
-    a(href="/remove/#{posts.name}/#{posts.time.day}/#{posts.title}") 删除
-  h2 作者: 
-   a(href="/user/#{posts.name}") #{posts.name}
-  h3 日期: #{posts.time.minute}
-  if posts.tags
-   each item in posts.tags
-    a(href="/tags/#{item}") #{item}
-  div
-   :markdown
-   !{posts.post}
-  div 留言项目：
-  each item in posts.comments
-   div
-    p
-     a(href="#{item.website}") #{item.name}
-     span 于#{item.time}回复
-    p #{item.content}
-  form(method="post")
-   if user
-    span 姓名:
-    input(type="text" name="name" value="#{user.name}")
-    span 邮箱:
-    input(type="text" name="email" value="#{user.email}")
-    span 网址:
-    input(type="text" name="website" value="/user/#{user.name}")
-   else
-    span 姓名:
-    input(type="text" name="name" value="")
-    span 邮箱:
-    input(type="text" name="email" value="")
-    span 网址:
-    input(type="text" name="website" value="http://")
-   textarea(name="content" rows="5" cols="80")
-   input(type="submit" value="留言")
+  include ../nav.jade
+  div.container#content
+    div.row
+      div.col-md-8.col-md-offset-2
+        h1 #{posts.title}
+        p
+        if (user && user.name == posts.name)
+         span
+          a(href="/edit/#{posts.name}/#{posts.time.day}/#{posts.title}") 编辑
+         span.line
+         span
+          a(href="/remove/#{posts.name}/#{posts.time.day}/#{posts.title}") 删除
+        p
+          span 作者: 
+            a(href="/user/#{posts.name}") #{posts.name}
+          span.line
+          span 日期: #{posts.time.minute}
+        p
+        if posts.tags
+         each item in posts.tags
+          a.btn.btn-xs.btn-default.mr5(href="/tags/#{item}") #{item}
+        div.article-box
+         :markdown
+         !{posts.post}
+        hr
+        h5 全部留言：
+        each item in posts.comments
+         div
+          p
+           a(href="#{item.website}") #{item.name}
+           span 于#{item.time}回复
+          p #{item.content}
+        hr
+        form.form-inline(method="post")
+         if user
+          div.form-group
+            label 姓名:
+            input.form-control(type="text" name="name" value="#{user.name}")
+            label 邮箱:
+            input.form-control(type="text" name="email" value="#{user.email}")
+            label 网址:
+            input.form-control(type="text" name="website" value="/user/#{user.name}")
+          div.form-group
+            textarea.form-control(name="content" rows="5" cols="100" style="max-width:100%;" placeholder="谈谈你对此文章的看法")
+          div.form-group
+            input.btn.btn-default(type="submit" value="提交留言")
+         else
+          div.form-group
+            label 姓名:
+            input.form-control(type="text" name="name" value="")
+            label 邮箱:
+            input.form-control(type="text" name="email" value="")
+            label 网址:
+            input.form-control(type="text" name="website" value="http://")
+          div.form-group
+            textarea.form-control(name="content" rows="5" cols="100" style="max-width:100%;" placeholder="谈谈你对此文章的看法")
+          div.form-group
+            input.btn.btn-default(type="submit" value="提交留言")
  include ../footer.jade
