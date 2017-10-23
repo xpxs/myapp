@@ -5,18 +5,24 @@ block content
   div.container#content
     div.row
       div.col-md-8.col-md-offset-2
-        form.form-inline(method="post")
-          div.form-group.form-title
-            label.mr5 标题：  
-            input.form-control(type="text" name="title")
+        form.form-horizontal(method="post")
           div.form-group
-            label.mr5 标签：
-            input.form-control(type="text" name="tag1")
-            input.form-control(type="text" name="tag2")
-            input.form-control(type="text" name="tag3")
+            label.col-sm-2.control-label 标题:
+            div.col-sm-10  
+              input.form-control(type="text" name="title")
           div.form-group
-            label.mr5 正文：  
-            textarea.form-control(type="password" name="post" rows="20" cols="100")
-          div.form-group  
-            input.btn.btn-default(type="submit" value="发表")
+            label.col-sm-2.control-label 标签:
+            div.col-sm-3
+              input.form-control(type="text" name="tag1")
+            div.col-sm-3
+              input.form-control(type="text" name="tag2")
+            div.col-sm-3
+              input.form-control(type="text" name="tag3")
+          div.form-group
+            label.col-sm-2.control-label 正文:
+            div.col-sm-10  
+              textarea.form-control(type="password" name="post" rows="20" cols="100")
+          div.form-group 
+            div.col-sm-10.col-sm-offset-2 
+              input.btn.btn-default(type="submit" value="发表")
   include ../footer.jade

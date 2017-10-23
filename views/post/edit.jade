@@ -5,20 +5,26 @@ block content
  div.container#content
   div.row
     div.col-md-8.col-md-offset-2
-      form.form-inline(method='post')
-        div.form-group.form-title
-          label.mr5 标题:
-          input.form-control(type='text' name='title' value='#{posts.title}' disabled='true')
+      form.form-horizontal(method='post')
         div.form-group
-          label.mr5 标签:
-          input.form-control(type='text' name='tag1' value='#{posts.tags[0]}' disabled='true')
-          input.form-control(type='text' name='tag2' value='#{posts.tags[1]}' disabled='true')
-          input.form-control(type='text' name='tag3' value='#{posts.tags[2]}' disabled='true')
+          label.col-sm-2.control-label 标题:
+          div.col-sm-10
+            input.form-control(type='text' name='title' value='#{posts.title}' disabled='true')
         div.form-group
-          label.mr5 正文:
-          textarea.form-control(name="post" rows="20" cols="100") 
-            :markdown
-            !{posts.post}
+          label.col-sm-2.control-label 标签:
+          div.col-sm-3
+            input.form-control(type='text' name='tag1' value='#{posts.tags[0]}' disabled='true')
+          div.col-sm-3
+            input.form-control(type='text' name='tag2' value='#{posts.tags[1]}' disabled='true')
+          div.col-sm-3
+            input.form-control(type='text' name='tag3' value='#{posts.tags[2]}' disabled='true')
         div.form-group
-          input.btn.btn-default(type="submit" value="保存修改")
+          label.col-sm-2.control-label 正文:
+          div.col-sm-10  
+            textarea.form-control(name="post" rows="20" cols="100") 
+              :markdown
+              !{posts.post}
+        div.form-group
+          div.col-sm-10.col-sm-offset-2 
+            input.btn.btn-default(type="submit" value="保存修改")
  include ../footer.jade

@@ -34,29 +34,39 @@ block content
            span 于#{item.time}回复
           p #{item.content}
         hr
-        form.form-inline(method="post")
+        form.form-horizontal(method="post")
          if user
           div.form-group
-            label 姓名:
-            input.form-control(type="text" name="name" value="#{user.name}")
-            label 邮箱:
-            input.form-control(type="text" name="email" value="#{user.email}")
-            label 网址:
-            input.form-control(type="text" name="website" value="/user/#{user.name}")
+            label.col-sm-1.control-label 姓名:
+            div.col-sm-3
+              input.form-control(type="text" name="name" value="#{user.name}")
+            label.col-sm-1.control-label 邮箱:
+            div.col-sm-3
+              input.form-control(type="text" name="email" value="#{user.email}")
+            label.col-sm-1.control-label 网址:
+            div.col-sm-3
+              input.form-control(type="text" name="website" value="/user/#{user.name}")
           div.form-group
-            textarea.form-control(name="content" rows="5" cols="100" style="max-width:100%;" placeholder="谈谈你对此文章的看法")
+            div.col-sm-12
+              textarea.form-control(name="content" rows="5" cols="100" style="max-width:100%;" placeholder="谈谈你对此文章的看法")
           div.form-group
-            input.btn.btn-default(type="submit" value="提交留言")
+            div.col-sm-12
+              input.btn.btn-default(type="submit" value="提交留言")
          else
           div.form-group
-            label 姓名:
-            input.form-control(type="text" name="name" value="")
-            label 邮箱:
-            input.form-control(type="text" name="email" value="")
-            label 网址:
-            input.form-control(type="text" name="website" value="http://")
+            label.col-sm-1.control-label 姓名:
+            div.col-sm-3
+              input.form-control(type="text" name="name" value="")
+            label.col-sm-1.control-label 邮箱:
+            div.col-sm-3
+              input.form-control(type="text" name="email" value="")
+            label.col-sm-1.control-label 网址:
+            div.col-sm-3
+              input.form-control(type="text" name="website" value="http://")
           div.form-group
-            textarea.form-control(name="content" rows="5" cols="100" style="max-width:100%;" placeholder="谈谈你对此文章的看法")
+            div.col-sm-12
+              textarea.form-control(name="content" rows="5" cols="100" placeholder="谈谈你对此文章的看法")
           div.form-group
-            input.btn.btn-default(type="submit" value="提交留言")
+            div.col-sm-12
+              input.btn.btn-default(type="submit" value="提交留言")
  include ../footer.jade

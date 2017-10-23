@@ -108,39 +108,82 @@ module.exports = function(app) {
       });
     });
   })
-  app.get('/news/list',function(req, res ,next) {
+
+  //科技新闻列表
+  app.get('/article/list',function(req, res ,next) {
     var page = req.query.p ? parseInt(req.query.p) : 1;
     var g = {}
     Articles.getArticleAll(function (err, total){
       g.ArticleTotal = total;
     });
-    Articles.getArticleTwenty(page, function (err, data) {
+    Articles.getArticleTwenty(page, function (err, articles) {
       if (err) {
-        data = [];
+        articles = [];
       } 
-      res.render('news/list', {
+      res.render('article/list', {
         title: '主页',
-        articles: data,
+        articles: articles,
         page: page,
         isFirstPage: (page - 1) == 0,
-        isLastPage: ((page - 1) * 20 + data.length) == g.ArticleTotal,
+        isLastPage: ((page - 1) * 20 + articles.length) == g.ArticleTotal,
         user: req.session.user,
         success: req.flash('success').toString(),
         error: req.flash('error').toString()
       });
     });
   })
-  //查看新闻
+  //科技新闻查看
+  app.get('/article/list/:title', function(req, res, next) { //用户
+      Articles.getArticleTitle(req.params.title, function(err, articles) {
+        if (!articles) {
+          req.flash('error', "没有该文章");
+          return res.redirect('/article/' + req.params.title);
+        }
+        // data.articleText = markdown.toHTML(data.articleText); //markdown 转html
+        res.render('article/article', {
+          title: req.params.title,
+          articles: articles,
+          user: req.session.user,
+          success: req.flash('success').toString(),
+          error: req.flash('error').toString()
+        });
+      });
+  })
+
+  //社会新闻列表
+  app.get('/news/list',function(req, res ,next) {
+    var page = req.query.p ? parseInt(req.query.p) : 1;
+    var g = {}
+    News.getNewsAll(function (err, total){
+      g.NewsTotal = total;
+    });
+    News.getNewsTwenty(page, function (err, news) {
+      if (err) {
+        news = [];
+      } 
+      res.render('news/list', {
+        title: '主页',
+        news: news,
+        page: page,
+        isFirstPage: (page - 1) == 0,
+        isLastPage: ((page - 1) * 20 + news.length) == g.NewsTotal,
+        user: req.session.user,
+        success: req.flash('success').toString(),
+        error: req.flash('error').toString()
+      });
+    });
+  })
+  //科技新闻查看
   app.get('/news/list/:title', function(req, res, next) { //用户
-      Articles.getArticleTitle(req.params.title, function(err, data) {
-        if (!data) {
+      News.getNewsTitle(req.params.title, function(err, news) {
+        if (!news) {
           req.flash('error', "没有该文章");
           return res.redirect('/news/' + req.params.title);
         }
         // data.articleText = markdown.toHTML(data.articleText); //markdown 转html
         res.render('news/article', {
           title: req.params.title,
-          articles: data,
+          news: news,
           user: req.session.user,
           success: req.flash('success').toString(),
           error: req.flash('error').toString()

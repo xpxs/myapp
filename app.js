@@ -62,27 +62,4 @@ app.use(function (req, res, next) {
   res.locals.infos = req.flash('success');
   next();
 });
-
-// catch 404 and forward to error handler 捕获404错误，并转发到错误处理器
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  console.log("err",err);
-  next(err);
-});
-
-// error handler //生产环境/开发环境下的错误处理器，将错误信息渲染error模版并显示到浏览器中
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-  // console.log("message",res.locals.message);
-  // console.log("error",res.locals.error);
-});
-// app.disable('etag');
-
 module.exports = app; //导出app实例供其他模块调用

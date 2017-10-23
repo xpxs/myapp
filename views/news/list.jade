@@ -6,27 +6,15 @@ block content
     div.row
       div.col-md-8
         ul.list-unstyled
-          if news
-            each item in articles
-              li
-                h4
-                  a(href="/news/list/#{item.articleTitle}") #{item.articleTitle}
-                p 
-                  span 来源: #{item.articleBorn}
-                  span.line
-                  span 时间: #{item.articleTime}
-                  span.line
-                  span 阅读量: #{item.articleRead}
-          if news
-              each item in news
-              li
-                h4
-                  a(href="/news/list/#{item.newsTitle}") #{item.newsTitle}
-                p 
-                  span 来源: #{item.newsBorn}
-                  span.line
-                  span 时间: #{item.newsTime}
-                  span.line
-                  span 阅读量: #{item.newsRead}
-          include ../page.jade
+          each item in news
+            li
+              h4
+                a(href="/news/list/#{item.newsTitle}") #{item.newsTitle}
+              p 
+                span 来源: #{item.newsBorn}
+                span.line
+                span 时间: #{item.newsTime}
+                span.line
+                span 阅读量: #{item.newsRead}
+        include ../page.jade
  include ../footer.jade
