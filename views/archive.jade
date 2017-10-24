@@ -1,4 +1,4 @@
-extends layout
+extends pub/layout
 block content
  ul
   - var lastYear = 0
@@ -11,4 +11,4 @@ block content
     time #{item.time.day}
    li
     a(href="/user/#{item.name}/#{item.time.day}/#{item.title}") #{item.title}
-  include footer.jade
+  include pub/footer.jade

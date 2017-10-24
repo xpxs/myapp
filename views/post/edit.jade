@@ -1,7 +1,7 @@
-extends ../layout
+extends ../pub/layout
  
 block content
- include ../nav.jade
+ include ../pub/nav.jade
  div.container#content
   div.row
     div.col-md-8.col-md-offset-2
@@ -20,11 +20,20 @@ block content
             input.form-control(type='text' name='tag3' value='#{posts.tags[2]}' disabled='true')
         div.form-group
           label.col-sm-2.control-label 正文:
-          div.col-sm-10  
-            textarea.form-control(name="post" rows="20" cols="100") 
+          div.col-sm-10
+            <!-- 加载编辑器的容器 -->
+            textarea(id="ueditorContainer" class="ueditor-content" name="post")  
               :markdown
               !{posts.post}
         div.form-group
           div.col-sm-10.col-sm-offset-2 
             input.btn.btn-default(type="submit" value="保存修改")
- include ../footer.jade
+  script(type="text/javascript" , src="/ueditor/ueditor/ueditor.config.js")
+  script(type="text/javascript" , src="/ueditor/ueditor/ueditor.all.js")
+  <!-- 实例化编辑器 -->
+  script(type="text/javascript").
+    var ue = UE.getEditor('ueditorContainer');
+    ue.ready(function() {
+      ue.setHeight(400);
+    })
+ include ../pub/footer.jade

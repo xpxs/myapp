@@ -1,0 +1,7 @@
+mongo用户管理:
+admin
+user:root
+pwd:U&9Hm$g5b:2D5a*O!n
+
+user:cwznTP
+pwd:9Tc5)*.qV@`Y4m;2

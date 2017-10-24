@@ -1,6 +1,6 @@
 @charset "UTF-8";
 /** 全局定义颜色样式 **/
-body { background: #f3f3f3; font: "Microsoft YaHei",YaHei,tahoma,arial,"Hiragino Sans GB"; }
+body { background: #fff; font: "Microsoft YaHei",YaHei,tahoma,arial,"Hiragino Sans GB"; }
 
 input:visited { border-color: #f60; }
 input:focus { border-color: #f60; }
@@ -28,6 +28,9 @@ a:hover { color: #f60; }
 #main .logo img { margin-top: 80px; width: 120px; }
 
 .nav { text-align: center; display: block; border-bottom-color: #ddd; border-bottom-style: solid; border-bottom-width: 1px; }
+.nav .on a { color: #f60; }
+.nav .on a:hover { background-color: transparent; }
+.nav .on:before { -webkit-transition: all 0.5s; -moz-transition: all 0.5s; -o-transition: all 0.5s; transition: all 0.5s; content: ""; position: absolute; bottom: -1px; left: 0; width: 100%; z-index: 9999; display: block; background-color: #f60; height: 2px; }
 .nav li { line-height: 42px; margin-top: 10px; font-size: 14px; display: inline-block; position: relative; }
 .nav li a { padding: 10px 25px; }
 .nav li:hover { cursor: pointer; }
@@ -43,6 +46,7 @@ a:hover { color: #f60; }
 #content li { height: 18px; overflow: hidden; margin-bottom: 15px; }
 #content span { color: #888; }
 #content span.line { height: 10px; display: inline-block; border-right: 1px solid #ddd; margin-right: 8px; margin-left: 8px; }
+#content .ueditor-content { /**百度编辑器的宽度、高度设置**/ }
 
 /**网页底部样式**/
 #footer { color: #999; }

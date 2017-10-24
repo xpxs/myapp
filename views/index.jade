@@ -1,7 +1,7 @@
 
-extends layout
+extends pub/layout
 block content
- include nav.jade
+ include pub/nav.jade
  div.container#content
   div.row
    div.col-md-4
@@ -34,7 +34,7 @@ block content
       a(href="/news/list/#{item.newsTitle}") #{item.newsTitle}
     div
      a.btn.btn-default(href="/news/list") 查看更多
- include footer.jade
+ include pub/footer.jade
 
 
 

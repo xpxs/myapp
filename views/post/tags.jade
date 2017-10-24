@@ -1,8 +1,8 @@
-extends ../layout
+extends ../pub/layout
  
 block content
  if success
   div #{success}
  each item in posts
   a(href="/tags/#{item}") #{item}
- include ../footer.jade
+ include ../pub/footer.jade

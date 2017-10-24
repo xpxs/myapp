@@ -1,16 +1,16 @@
-extends ../layout
+extends ../pub/layout
  
 block content
-  include ../nav.jade
+  include ../pub/nav.jade
   div.container#content
     div.row
-      div.col-md-8
-      h1 #{articles.articleTitle}
-      p 
-        span 来源: #{articles.articleBorn}
-        span.line
-        span 时间: #{articles.articleTime}
-        span.line
-        span 阅读量: #{articles.articleRead}
-      p #{articles.articleText}
- include ../footer.jade
+      div.col-md-8.col-md-offset-2
+        h1 #{articles.articleTitle}
+        p 
+          span 来源: #{articles.articleBorn}
+          span.line
+          span 时间: #{articles.articleTime}
+          span.line
+          span 阅读量: #{articles.articleRead}
+        p #{articles.articleText}
+ include ../pub/footer.jade

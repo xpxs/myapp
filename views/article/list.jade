@@ -1,7 +1,7 @@
-extends ../layout
+extends ../pub/layout
  
 block content
-  include ../nav.jade
+  include ../pub/nav.jade
   div.container#content
     div.row
       div.col-md-8
@@ -16,5 +16,5 @@ block content
                 span 时间: #{item.articleTime}
                 span.line
                 span 阅读量: #{item.articleRead}
-          include ../page.jade
- include ../footer.jade
+          include ../pub/page.jade
+ include ../pub/footer.jade

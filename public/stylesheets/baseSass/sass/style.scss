@@ -8,7 +8,7 @@ $pageWidth: 1170px;
 $noteColor:#888;
 
 body{
- background: #f3f3f3;
+ background: #fff;
  font:"Microsoft YaHei",YaHei,tahoma,arial,"Hiragino Sans GB";
 }
 input{
@@ -90,6 +90,29 @@ a {
   style: $solid;
   width:1px;
  }
+ .on{
+  a{
+    color: $mainColor;
+    &:hover{
+      background-color:transparent;
+    }
+   }
+  &:before{
+   -webkit-transition: all 0.5s;
+   -moz-transition: all 0.5s;  
+   -o-transition: all 0.5s;  
+   transition: all 0.5s;
+   content: "";
+   position: absolute;
+   bottom: -1px;
+   left: 0;
+   width:100%;
+   z-index: 9999;
+   display: block;
+   background-color: $mainColor;
+   height: 2px;
+   }
+ }
  li{
   line-height: 42px;
   margin-top: 10px;
@@ -157,6 +180,9 @@ a {
     border-right: 1px $solid $borderColor;
     margin-right: 8px;
     margin-left: 8px;
+  }
+  .ueditor-content{ /**百度编辑器的宽度、高度设置**/
+    
   }
 }
 /**网页底部样式**/

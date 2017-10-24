@@ -1,15 +1,21 @@
-extends ../layout
+extends ../pub/layout
  
 block content
- if success
-  div #{success}
- each item in posts
-  h1
-   a(href="/user/#{item.name}/#{item.time.day}/#{item.title}") #{item.title}
-  h2 作者: 
-   a(href="/user/#{item.name}") #{item.name}
-  h3 #{item.time.minute}
-  div
-   :markdown
-   !{item.post}
- include ../footer.jade
+ include ../pub/nav.jade
+ div.container#content
+  div.row
+   div.col-md-8.col-md-offset-2
+    ul.list-unstyled
+     each item in posts
+      li
+       h4
+        a(href="/user/#{item.name}/#{item.time.day}/#{item.title}") #{item.title}
+       p
+        span 作者: 
+          a(href="/user/#{item.name}") #{item.name}
+        span.line
+        span 日期: #{item.time.minute}
+       div
+        :markdown
+        !{item.post}
+ include ../pub/footer.jade

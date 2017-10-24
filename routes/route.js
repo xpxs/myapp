@@ -69,9 +69,9 @@ module.exports = function(app) {
           req.flash('error', err);
           return res.redirect('/');
         }
-        data.forEach(function(item) {
-          item.post = markdown.toHTML(item.post); //markdown 转html
-        });
+        // data.forEach(function(item) {
+        //   item.post = markdown.toHTML(item.post); //markdown 转html
+        // });
 
         res.render('post/user', {
           title: user.name,
@@ -97,7 +97,7 @@ module.exports = function(app) {
           req.flash('error', "没有该条数据");
           return res.redirect('/user/' + req.params.name);
         }
-        data.post = markdown.toHTML(data.post); //markdown 转html
+        // data.post = markdown.toHTML(data.post); //markdown 转html
         res.render('post/article', {
           title: req.params.title,
           posts: data,
@@ -216,7 +216,7 @@ module.exports = function(app) {
 
   //编辑文章请求
   app.get('/edit/:name/:day/:title', checkLogin);
-  app.get('/edit/:name/:day/:title', function(req, res) {
+  app.get('/edit/:name/:day/:title', function(req, res, next) {
     var currentUser = req.session.user;
     Posts.edit(currentUser.name, req.params.day, req.params.title, function(err, data) {
       if (!data) {
@@ -251,7 +251,7 @@ module.exports = function(app) {
 
   //删除文章get请求
   app.get('/remove/:name/:day/:title', checkLogin);
-  app.get('/remove/:name/:day/:title', function (req, res) {
+  app.get('/remove/:name/:day/:title', function (req, res, next) {
     var currentUser = req.session.user;
     Posts.removeOne(currentUser.name, req.params.day, req.params.title, function (err) {
       if (err) {
@@ -264,8 +264,8 @@ module.exports = function(app) {
   });
 
   //注册页面get请求
-  app.get('/reg', function(req, res) {
-    res.render('reg', {
+  app.get('/reg', function(req, res, next) {
+    res.render('register/reg', {
       title: '注册',
       success: req.flash('success').toString(),
       error: req.flash('error').toString(),
@@ -324,8 +324,8 @@ module.exports = function(app) {
 
   //登录路由get请求
   app.get('/login', checkNotLogin);
-  app.get('/login', function(req, res) {
-    res.render('login', {
+  app.get('/login', function(req, res, next) {
+    res.render('register/login', {
       title: '登录',
       success: req.flash('success').toString(),
       error: req.flash('error').toString(),
@@ -338,11 +338,11 @@ module.exports = function(app) {
   app.post('/login', function(req, res) {
     if (!trim(req.body.name)) {
       req.flash('error', '请输入用户名!')
-      return res.redirect('/login'); //返回注册页
+      return res.redirect('/login'); //返回登录页
     }
     if (!trim(req.body.password)) {
       req.flash('error', '请输入密码!')
-      return res.redirect('/login'); //返回注册页
+      return res.redirect('/login'); //返回登录页
     }
     var md5 = crypto.createHash('md5'),
       password = md5.update(req.body.password).digest('hex');
@@ -350,12 +350,12 @@ module.exports = function(app) {
       console.log("user", user)
       if (!user) {
         req.flash('error', '用户不存在!');
-        return res.redirect('/login'); //用户不存在则跳转到登录页
+        return res.redirect('/login'); //返回登录页
       }
       //检查密码是否一致
       if (user.password != password) {
         req.flash('error', '密码错误!');
-        return res.redirect('/login'); //密码错误则跳转到登录页
+        return res.redirect('/login'); //返回登录页
       }
       //用户名密码都匹配后，将用户信息存入 session
       req.session.user = user;
@@ -366,7 +366,7 @@ module.exports = function(app) {
 
   //文章列表get请求
   app.get('/post', checkLogin);
-  app.get('/post', function(req, res) {
+  app.get('/post', function(req, res, next) {
     res.render('post/post', {
       title: '发表',
       error: req.flash('error').toString(),
@@ -376,7 +376,7 @@ module.exports = function(app) {
   });
   //发表文章 post 提交请求
   app.post('/post', checkLogin);
-  app.post('/post', function(req, res) {
+  app.post('/post', function(req, res, next) {
     if (!trim(req.body.title)) {
       req.flash('error', '文章标题不能为空!')
       return res.redirect('/post'); //返回注册页
@@ -411,7 +411,7 @@ module.exports = function(app) {
 
   //退出登录路由get请求
   app.get('/logout', checkLogin);
-  app.get('/logout', function(req, res) {
+  app.get('/logout', function(req, res, next) {
     req.session.user = null;
     req.flash('success', '退出成功!');
     res.redirect('/');
@@ -419,7 +419,7 @@ module.exports = function(app) {
 
   //上传图片
   app.get('/upload', checkLogin);
-  app.get('/upload', function(req, res) {
+  app.get('/upload', function(req, res, next) {
     res.render('upload', {
       title: '文件上传',
       user: req.session.user,
@@ -436,7 +436,7 @@ module.exports = function(app) {
   });
 
   //存档页面效果
-  app.get('/archive', function (req, res) {
+  app.get('/archive', function (req, res, next) {
     Posts.getArchive(function (err, data) {
       console.log("data",data)
       if (err) {
@@ -454,7 +454,7 @@ module.exports = function(app) {
   });
 
   //获取文章标签
-  app.get('/tags', function (req, res) {
+  app.get('/tags', function (req, res, next) {
     Posts.getTags(function (err, data) {
       console.log("data",data)
       if (err) {
@@ -472,7 +472,7 @@ module.exports = function(app) {
   });
 
   //获得tag标签下的所有页面
-  app.get('/tags/:tag', function (req, res) {
+  app.get('/tags/:tag', function (req, res, next) {
     Posts.getTag(req.params.tag, function (err, data) {
       console.log("data",data)
       if (err) {

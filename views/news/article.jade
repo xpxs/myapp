@@ -1,10 +1,10 @@
-extends ../layout
+extends ../pub/layout
  
 block content
-  include ../nav.jade
+  include ../pub/nav.jade
   div.container#content
     div.row
-      div.col-md-8
+      div.col-md-8.col-md-offset-2
         h1 #{news.newsTitle}
         p 
           span 来源: #{news.newsBorn}
@@ -13,4 +13,4 @@ block content
           span.line
           span 阅读量: #{news.newsRead}
         p #{news.newsText}
- include ../footer.jade
+ include ../pub/footer.jade
