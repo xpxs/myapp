@@ -105,6 +105,13 @@ module.exports = function(app) {
           success: req.flash('success').toString(),
           error: req.flash('error').toString()
         });
+        //pv浏览量更新
+        Posts.updatePv(req.params.name, req.params.day, req.params.title, function(err, data) {
+          if (err) {
+            req.flash('error', "没有该条数据");
+            return res.redirect('/user/' + req.params.name);
+          }
+        });
       });
     });
   })
@@ -443,7 +450,7 @@ module.exports = function(app) {
         req.flash('error', err); 
         return res.redirect('/');
       }
-      res.render('archive', {
+      res.render('post/archive', {
         title: '存档',
         posts: data,
         user: req.session.user,

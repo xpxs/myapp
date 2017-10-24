@@ -7,7 +7,8 @@ var PostSchema = new mongoose.Schema({
     title: String,
     post: String,
     tags: Array,
-    comments: Array
+    comments: Array,
+    pv: {type:Number,default:0}
 })
 
 //每次执行都会调用,时间更新操作
@@ -94,6 +95,14 @@ PostSchema.statics = {
                 'name': name,
                 'title':title
                  })
+            // .update({$inc: {"pv": 1}})
+            .exec(cb)
+    },
+    updatePv:function(name, day, title, cb) {
+        return this
+            .update({'time.day':day,
+                'name': name,
+                'title':title},{$inc: {"pv": 1}})
             .exec(cb)
     },
     edit: function(name, day, title, cb) { //修改文章

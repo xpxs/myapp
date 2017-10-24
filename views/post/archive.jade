@@ -1,0 +1,17 @@
+extends ../pub/layout
+block content
+  include ../pub/nav.jade
+  div.container#content
+    div.row
+      div.col-md-8
+        ul.list-unstyled
+          - var lastYear = 0
+          each item in posts
+           if (lastYear != item.time.year)
+            li
+             h4 #{item.time.year}
+           - lastYear = item.time.year //赋值要加短横线
+           li
+            a(href="/user/#{item.name}/#{item.time.day}/#{item.title}") #{item.title}
+            span &nbsp;#{item.time.day}
+  include ../pub/footer.jade
