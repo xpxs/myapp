@@ -1,7 +1,26 @@
 extends ../pub/layout
  
 block content
- include ../pub/nav.jade
+ div.user-admin
+  div.container
+    div.row
+     div.col-md-8.col-md-offset-2
+      ul.list-inline
+        li
+          div.user-img#fileSelect
+            //- if !imgSrc
+            //- img#userImg(src="#{imgSrc}" alt="头像")
+            //- form(name='userForm' action = "javascript:;" method="post" encype = "multipart/form-data")
+            //-   input(id="fileElem" type="file" name="userImg")
+            //- else
+            img#userImg(src="/images/user.jpg" alt="头像")
+            form(name='userForm' action = "javascript:;" method="post" encype = "multipart/form-data")
+              input(id="fileElem" type="file" name="userImg")
+        li
+          h3 #{title}
+          p 少年,说点什么吧!
+            a.btn.btn-default.btn-xs(href="") 编辑
+ 
  div.container#content
   div.row
    div.col-md-8.col-md-offset-2
@@ -18,4 +37,37 @@ block content
        div
         :markdown
         !{item.post}
+  script(src="/javascripts/bootstrapModel.js")
+  script.
+    var fileSelect = document.getElementById("fileSelect");
+    var fileElem = document.getElementById("fileElem");
+    fileSelect.onclick = function(){
+        fileElem.click();
+        //- $(fileElem).replaceWith('<input id="fileElem" type="file" name="up"/>');
+    }
+    fileElem.onchange = function(e){
+      // 判断上传文件类型
+      var objFile = fileElem.value;
+      var objType = objFile.substring(objFile.lastIndexOf(".")).toLowerCase();
+      var formData = new FormData(document.forms.namedItem("userForm"));
+        if(objType === ".png" || objType === ".gif" || objType === ".jpg"){
+            $.ajax({
+                type : 'post',
+                url : '/uploadUserImg',
+                data: formData ,
+                processData:false,
+                async:false,
+                cache: false,  
+                contentType: false, 
+                success:function(){
+                    $.model.alert("提示", "上传成功", "确定");
+                },
+                error:function(err){
+                    console.log(err);
+                }
+            });
+        }else{
+          $.model.alert("提示", "这个是测试弹窗", "确定");
+        }
+    }
  include ../pub/footer.jade

@@ -13,6 +13,7 @@ var upload = require('../models/upload'); //导入图片上传文件模块
 module.exports = function(app) {
   //主页请求
   app.get(['/', '/index'], function(req, res, next) { //主页路由
+    console.log("req.session",req.session)
     Articles.getArticleTen(function (err, articles){
       if (err) {data = [];}
       Posts.getPostTen(function (err, posts) {
@@ -41,7 +42,7 @@ module.exports = function(app) {
     // News.getNewsTwenty(page, function (err, data) {
     //   if (err) {
     //     data = [];
-    //   } 
+    //   }
     //   res.render('index', {
     //     title: '主页',
     //     news: data,
@@ -126,7 +127,7 @@ module.exports = function(app) {
     Articles.getArticleTwenty(page, function (err, articles) {
       if (err) {
         articles = [];
-      } 
+      }
       res.render('article/list', {
         title: '主页',
         articles: articles,
@@ -167,7 +168,7 @@ module.exports = function(app) {
     News.getNewsTwenty(page, function (err, news) {
       if (err) {
         news = [];
-      } 
+      }
       res.render('news/list', {
         title: '主页',
         news: news,
@@ -201,7 +202,7 @@ module.exports = function(app) {
   //针对文章留言
   app.post('/user/:name/:day/:title', function(req, res, next) { //留言
     var date = new Date(),
-        time = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + 
+        time = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " +
                date.getHours() + ":" + (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes());
     var comment = {
         name: req.body.name,
@@ -213,7 +214,7 @@ module.exports = function(app) {
     Posts.updateComment(req.params.name, req.params.day, req.params.title, comment, function (err) {
       //var url = '/user/'+req.params.name+'/'+req.params.day+'/'+req.params.title;
       if (err) {
-        req.flash('error', err); 
+        req.flash('error', err);
         return res.redirect('back');
       }
       req.flash('success', '留言成功!');
@@ -248,7 +249,7 @@ module.exports = function(app) {
     Posts.updateOne(currentUser.name, req.params.day, req.params.title, req.body.post, function (err) {
       var url = encodeURI('/user/' + req.params.name + '/' + req.params.day + '/' + req.params.title);
       if (err) {
-        req.flash('error', err); 
+        req.flash('error', err);
         return res.redirect(url);//出错！返回文章页
       }
       req.flash('success', '修改成功!');
@@ -262,7 +263,7 @@ module.exports = function(app) {
     var currentUser = req.session.user;
     Posts.removeOne(currentUser.name, req.params.day, req.params.title, function (err) {
       if (err) {
-        req.flash('error', err); 
+        req.flash('error', err);
         return res.redirect('back');//出错！
       }
       req.flash('success', '删除成功!');
@@ -324,7 +325,7 @@ module.exports = function(app) {
         }
         req.session.user = user; //用户信息存入 session
         req.flash('success', '注册成功!');
-        res.redirect('/reg'); //注册成功后返回主页
+        res.redirect('/'); //注册成功后返回主页
       });
     })
   });
@@ -427,7 +428,7 @@ module.exports = function(app) {
   //上传图片
   app.get('/upload', checkLogin);
   app.get('/upload', function(req, res, next) {
-    res.render('upload', {
+    res.render('pub/upload', {
       title: '文件上传',
       user: req.session.user,
       success: req.flash('success').toString(),
@@ -439,7 +440,25 @@ module.exports = function(app) {
   app.post('/upload', checkLogin);
   app.post('/upload', upload.array('up', 4), function(req, res) {
     req.flash('success', '文件上传成功!');
-    res.redirect('/upload');
+    res.redirect('back');
+  });//上传图片提交
+
+  // app.get('/uploadUserImg', checkLogin);
+  // app.get('/uploadUserImg', function(req, res, next) {
+  //     res.render('pub/upload', {
+  //     title: '文件上传',
+  //     user: req.session.user,
+  //     success: req.flash('success').toString(),
+  //     error: req.flash('error').toString()
+  //   });
+  // });
+  app.post('/uploadUserImg', checkLogin);
+  app.post('/uploadUserImg', upload.array('userImg', 1), function(req, res) {
+    // console.log("req.files[0].path",req.files[0].path)
+    var files = req.files[0].path.replace('public','');
+    req.flash('success', '文件上传成功!');
+    res.redirect('/user/'+ req.session.user);
+    res.json({imgSrc:files});
   });
 
   //存档页面效果
@@ -447,7 +466,7 @@ module.exports = function(app) {
     Posts.getArchive(function (err, data) {
       console.log("data",data)
       if (err) {
-        req.flash('error', err); 
+        req.flash('error', err);
         return res.redirect('/');
       }
       res.render('post/archive', {
@@ -465,7 +484,7 @@ module.exports = function(app) {
     Posts.getTags(function (err, data) {
       console.log("data",data)
       if (err) {
-        req.flash('error', err); 
+        req.flash('error', err);
         return res.redirect('/');
       }
       res.render('post/tags', {
@@ -483,7 +502,7 @@ module.exports = function(app) {
     Posts.getTag(req.params.tag, function (err, data) {
       console.log("data",data)
       if (err) {
-        req.flash('error',err); 
+        req.flash('error',err);
         return res.redirect('/');
       }
       res.render('post/tag', {

@@ -14,6 +14,23 @@ a:hover { color: #f60; }
 
 .mt15 { margin-top: 15px; }
 
+.user-top { float: right; z-index: 99999; position: relative; right: 60px; top: 10px; }
+.user-top .dropdown a:hover { color: #333; text-decoration: none; }
+.user-top .dropdown .dropdown-menu { min-width: 100px; }
+.user-top .list-inline a:hover { color: #333; }
+
+/**
+用户管理**/
+.user-admin { height: 200px; border-bottom: 1px solid #ddd; }
+.user-admin .list-inline { margin-top: 80px; }
+.user-admin .list-inline .user-img { cursor: pointer; }
+.user-admin .list-inline .user-img img { border-radius: 50%; }
+.user-admin .list-inline .user-img form { display: none; }
+.user-admin .list-inline li { vertical-align: middle; }
+.user-admin .list-inline li h3 { margin-top: 0px; }
+.user-admin .list-inline li p { color: #999; }
+.user-admin .list-inline li p a { float: left; margin-right: 5px; }
+
 .form-inline .form-title { display: block; }
 .form-inline .form-title .form-control { display: block; width: 100%; }
 .form-inline .form-group { margin-right: 20px; margin-top: 15px; }

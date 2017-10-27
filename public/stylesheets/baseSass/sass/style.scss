@@ -35,6 +35,62 @@ a {
 .mt15{
   margin-top:15px;
 }
+.user-top{
+  float: right;
+  z-index: 99999;
+  position: relative;
+  right: 60px;
+  top: 10px;
+  .dropdown{
+    a{
+      &:hover{
+        color:#333;
+        text-decoration: none;
+      }
+    }
+    .dropdown-menu{
+      min-width: 100px;
+    }
+  }
+  .list-inline{
+    a{
+      &:hover{
+        color:#333;
+      }
+    }
+  }
+}
+/**
+用户管理**/
+.user-admin{
+  height:200px;
+  border-bottom: 1px $solid $borderColor;
+  .list-inline{
+    margin-top: 80px;
+    .user-img{
+      cursor: pointer;
+      img{
+        border-radius: 50%;
+      }
+      form{
+        display: none;
+      }
+    }
+    li{
+      vertical-align: middle;
+      h3{
+        margin-top: 0px;
+      }
+      p{
+        color: #999;
+        a{
+          float: left;
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+}
 .form-inline{
   .form-title{
       display: block;

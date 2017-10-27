@@ -1,3 +1,19 @@
+div.user-top
+ if user
+  div.dropdown
+    a(href="/user/#{user.name}" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true") #{user.name}
+     span.caret
+    ul.list-unstyled.dropdown-menu(aria-labelledby="dropdownMenu")
+      li
+        a(href="/user/#{user.name}") 个人中心
+      li
+        a(href="/logout") 退出
+ else
+  ul.list-inline
+    li
+      a(title="登录" href="/login") 登录
+    li
+      a(title="注册" href="/reg") 注册
 div#main
  div.logo
   a(href="/")
