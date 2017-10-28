@@ -32,29 +32,6 @@ module.exports = function(app) {
         })
       })
     })
-    // var page = req.query.p ? parseInt(req.query.p) : 1;
-    // Posts.getAll(function (err, total){
-    //   g.total = total;
-    // })
-    // News.getNewsAll(function (err, total){
-    //   g.NewsTotal = total;
-    // });
-    // News.getNewsTwenty(page, function (err, data) {
-    //   if (err) {
-    //     data = [];
-    //   }
-    //   res.render('index', {
-    //     title: '主页',
-    //     news: data,
-    //     posts: g.posts,
-    //     page: page,
-    //     isFirstPage: (page - 1) == 0,
-    //     isLastPage: ((page - 1) * 20 + data.length) == g.NewsTotal,
-    //     user: req.session.user,
-    //     success: req.flash('success').toString(),
-    //     error: req.flash('error').toString()
-    //   });
-    // });
   })
 
   //查看该用户下的所有文章
@@ -73,10 +50,11 @@ module.exports = function(app) {
         // data.forEach(function(item) {
         //   item.post = markdown.toHTML(item.post); //markdown 转html
         // });
-
         res.render('post/user', {
           title: user.name,
           posts: data,
+          imgsrc: user.usersrc,
+          autograph: user.autograph,
           user: req.session.user,
           success: req.flash('success').toString(),
           error: req.flash('error').toString()
@@ -355,7 +333,6 @@ module.exports = function(app) {
     var md5 = crypto.createHash('md5'),
       password = md5.update(req.body.password).digest('hex');
     Users.findById(req.body.name, function(err, user) {
-      console.log("user", user)
       if (!user) {
         req.flash('error', '用户不存在!');
         return res.redirect('/login'); //返回登录页
@@ -443,22 +420,30 @@ module.exports = function(app) {
     res.redirect('back');
   });//上传图片提交
 
-  // app.get('/uploadUserImg', checkLogin);
-  // app.get('/uploadUserImg', function(req, res, next) {
-  //     res.render('pub/upload', {
-  //     title: '文件上传',
-  //     user: req.session.user,
-  //     success: req.flash('success').toString(),
-  //     error: req.flash('error').toString()
-  //   });
-  // });
   app.post('/uploadUserImg', checkLogin);
-  app.post('/uploadUserImg', upload.array('userImg', 1), function(req, res) {
-    // console.log("req.files[0].path",req.files[0].path)
-    var files = req.files[0].path.replace('public','');
-    req.flash('success', '文件上传成功!');
-    res.redirect('/user/'+ req.session.user);
-    res.json({imgSrc:files});
+  app.post('/uploadUserImg', upload.array('userImg', 1), function(req, res, next) {
+    var usersrc = req.files[0].path.replace('public','');
+    var currentUser = req.session.user;
+    Users.userImgEditor(currentUser.name, usersrc, function(err, users) {
+      if (err) {
+        req.flash('error', err);
+        return res.redirect('/user/'+ currentUser.name);
+      }
+    });
+    res.json(req.files[0].path.replace('public',''));
+  });
+
+  app.post('/autograph', checkLogin);
+  app.post('/autograph', function(req, res, next) {
+    var currentUser = req.session.user;
+    var autograph = req.body.value;
+    Users.userAutograph(currentUser.name, autograph, function(err, users) {
+      if (err) {
+        req.flash('error', err);
+        return res.redirect('/user/'+ currentUser.name);
+      }
+    });
+    res.json('个性签名修改成功!');
   });
 
   //存档页面效果

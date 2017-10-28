@@ -8,18 +8,20 @@ block content
       ul.list-inline
         li
           div.user-img#fileSelect
-            //- if !imgSrc
-            //- img#userImg(src="#{imgSrc}" alt="头像")
-            //- form(name='userForm' action = "javascript:;" method="post" encype = "multipart/form-data")
-            //-   input(id="fileElem" type="file" name="userImg")
-            //- else
-            img#userImg(src="/images/user.jpg" alt="头像")
+            if imgsrc
+              img#userImg(src="#{imgsrc}" alt="头像")
+            else
+              img#userImg(src="/images/user.jpg" alt="头像")
             form(name='userForm' action = "javascript:;" method="post" encype = "multipart/form-data")
               input(id="fileElem" type="file" name="userImg")
         li
           h3 #{title}
-          p 少年,说点什么吧!
-            a.btn.btn-default.btn-xs(href="") 编辑
+          form#autographForm(name='autographForm' action = "javascript:;" method="post" encype = "multipart/form-data")
+            botton.btn.btn-default.btn-xs#editorBtn 修改
+            if autograph
+              input.autograph#autograph(name="autograph" value="#{autograph}" disabled)
+            else
+              input.autograph#autograph(name="autograph" placeholder="少年,说点什么吧!" disabled)
  
  div.container#content
   div.row
@@ -50,24 +52,57 @@ block content
       var objFile = fileElem.value;
       var objType = objFile.substring(objFile.lastIndexOf(".")).toLowerCase();
       var formData = new FormData(document.forms.namedItem("userForm"));
-        if(objType === ".png" || objType === ".gif" || objType === ".jpg"){
+      if(objType === ".png" || objType === ".gif" || objType === ".jpg"){
+          $.ajax({
+              type : 'post',
+              url : '/uploadUserImg',
+              data: formData ,
+              processData:false,
+              async:false,
+              cache: false,  
+              contentType: false, 
+              success:function(data){
+                $("#userImg").attr("src",data);
+                $.model.alert("提示", "上传成功", "确定");
+              },
+              error:function(err){
+                  console.log(err);
+              }
+          });
+      }else{
+        $.model.alert("提示", "这个是测试弹窗", "确定");
+      }
+    }
+    var editorBtn = document.getElementById('editorBtn');
+    var input = document.getElementById('autograph');
+    editorBtn.onclick = function(e){
+      var inputVal = input.value;
+      var that = e.target;
+      if(that.textContent == "修改"){
+        input.removeAttribute('disabled');
+        input.focus();
+        that.innerHTML = "保存";
+      }else{
+        that.innerHTML = "修改";
+        input.setAttribute('disabled','true');
+        input.onchange = function(){
+          if(inputVal !== input.value){
             $.ajax({
                 type : 'post',
-                url : '/uploadUserImg',
-                data: formData ,
-                processData:false,
-                async:false,
-                cache: false,  
-                contentType: false, 
-                success:function(){
-                    $.model.alert("提示", "上传成功", "确定");
+                url : '/autograph',
+                data: 'value='+input.value,
+                dataType:'json', 
+                success:function(data){
+                  $.model.alert("提示", data, "确定");
+                  that.innerHTML = "修改";
+                  input.setAttribute('disabled','true');
                 },
                 error:function(err){
                     console.log(err);
                 }
             });
-        }else{
-          $.model.alert("提示", "这个是测试弹窗", "确定");
+          }
         }
+      }
     }
  include ../pub/footer.jade

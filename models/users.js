@@ -3,7 +3,9 @@ var    mongoose = require('mongoose');
 var UsersSchema = new mongoose.Schema({
     name: String,
     password: String,
-    email: String
+    email: String,
+    usersrc: String,
+    autograph: String
 })
 
 //查询的静态方法
@@ -19,6 +21,24 @@ UsersSchema.statics = {
     findById: function(name, cb) { //根据name查询数据
         return this
             .findOne({ name: name })
+            .exec(cb)
+    },
+    userImgEditor: function(name, usersrc, cb) { //添加修改头像
+        return this
+            .update(
+                {"name":name},
+                {$set: {"usersrc": usersrc}
+                 },
+                 {upsert : true})
+            .exec(cb)
+    },
+    userAutograph: function(name, autograph, cb) { //添加签名
+        return this
+            .update(
+                {"name":name},
+                {$set: {"autograph": autograph}
+                 },
+                 {upsert : true})
             .exec(cb)
     }
 }

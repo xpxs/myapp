@@ -71,10 +71,19 @@ a {
       cursor: pointer;
       img{
         border-radius: 50%;
+        width: 80px;
+        height: 80px;
       }
       form{
         display: none;
       }
+    }
+    .autograph{
+      margin-left: 10px;
+      min-width: 200px;
+      border: none;
+      color: #999;
+      outline: none;
     }
     li{
       vertical-align: middle;

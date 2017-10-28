@@ -24,8 +24,9 @@ a:hover { color: #f60; }
 .user-admin { height: 200px; border-bottom: 1px solid #ddd; }
 .user-admin .list-inline { margin-top: 80px; }
 .user-admin .list-inline .user-img { cursor: pointer; }
-.user-admin .list-inline .user-img img { border-radius: 50%; }
+.user-admin .list-inline .user-img img { border-radius: 50%; width: 80px; height: 80px; }
 .user-admin .list-inline .user-img form { display: none; }
+.user-admin .list-inline .autograph { margin-left: 10px; min-width: 200px; border: none; color: #999; outline: none; }
 .user-admin .list-inline li { vertical-align: middle; }
 .user-admin .list-inline li h3 { margin-top: 0px; }
 .user-admin .list-inline li p { color: #999; }
