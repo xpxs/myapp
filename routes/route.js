@@ -423,6 +423,7 @@ module.exports = function(app) {
   app.post('/uploadUserImg', checkLogin);
   app.post('/uploadUserImg', upload.array('userImg', 1), function(req, res, next) {
     var usersrc = req.files[0].path.replace('public','');
+    console.log("usersrc",usersrc)
     var currentUser = req.session.user;
     Users.userImgEditor(currentUser.name, usersrc, function(err, users) {
       if (err) {
@@ -430,13 +431,14 @@ module.exports = function(app) {
         return res.redirect('/user/'+ currentUser.name);
       }
     });
-    res.json(req.files[0].path.replace('public',''));
+    res.json(usersrc);
   });
 
   app.post('/autograph', checkLogin);
   app.post('/autograph', function(req, res, next) {
     var currentUser = req.session.user;
     var autograph = req.body.value;
+    console.log("autograph",autograph)
     Users.userAutograph(currentUser.name, autograph, function(err, users) {
       if (err) {
         req.flash('error', err);

@@ -24,13 +24,14 @@ UsersSchema.statics = {
             .exec(cb)
     },
     userImgEditor: function(name, usersrc, cb) { //添加修改头像
-        return this
+            return this
             .update(
                 {"name":name},
                 {$set: {"usersrc": usersrc}
                  },
                  {upsert : true})
             .exec(cb)
+
     },
     userAutograph: function(name, autograph, cb) { //添加签名
         return this

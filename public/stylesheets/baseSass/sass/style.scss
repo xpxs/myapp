@@ -68,7 +68,7 @@ a {
   .list-inline{
     margin-top: 80px;
     .user-img{
-      cursor: pointer;
+      cursor:pointer;
       img{
         border-radius: 50%;
         width: 80px;
@@ -78,8 +78,10 @@ a {
         display: none;
       }
     }
+    #editorBtn{
+      margin-right: 10px;
+    }
     .autograph{
-      margin-left: 10px;
       min-width: 200px;
       border: none;
       color: #999;

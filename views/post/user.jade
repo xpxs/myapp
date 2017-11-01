@@ -7,21 +7,34 @@ block content
      div.col-md-8.col-md-offset-2
       ul.list-inline
         li
-          div.user-img#fileSelect
-            if imgsrc
-              img#userImg(src="#{imgsrc}" alt="头像")
-            else
-              img#userImg(src="/images/user.jpg" alt="头像")
-            form(name='userForm' action = "javascript:;" method="post" encype = "multipart/form-data")
-              input(id="fileElem" type="file" name="userImg")
+          if !user
+            div.user-img(style="cursor:default")
+              if imgsrc
+                img(src="#{imgsrc}" alt="头像")
+              else
+                img(src="/images/user.jpg" alt="头像")
+          else
+            div.user-img#fileSelect
+              if imgsrc
+                img#userImg(src="#{imgsrc}" alt="头像")
+              else
+                img#userImg(src="/images/user.jpg" alt="头像")
+              form(name='userForm' action = "javascript:;" method="post" encype = "multipart/form-data")
+                input(id="fileElem" type="file" name="userImg")
         li
           h3 #{title}
-          form#autographForm(name='autographForm' action = "javascript:;" method="post" encype = "multipart/form-data")
-            botton.btn.btn-default.btn-xs#editorBtn 修改
+          if !user
             if autograph
-              input.autograph#autograph(name="autograph" value="#{autograph}" disabled)
+              span.autograph #{autograph}
             else
-              input.autograph#autograph(name="autograph" placeholder="少年,说点什么吧!" disabled)
+              span.autograph 这家伙的签名还在构思中
+          else
+            form#autographForm(name='autographForm' action = "javascript:;" method="post" encype = "multipart/form-data")
+              botton.btn.btn-default.btn-xs#editorBtn 修改
+              if autograph
+                input.autograph#autograph(name="autograph" value="#{autograph}" disabled)
+              else
+                input.autograph#autograph(name="autograph" placeholder="少年,说点什么吧!" disabled)
  
  div.container#content
   div.row
