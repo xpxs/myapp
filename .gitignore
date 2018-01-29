@@ -1,2 +1,4 @@
 node_modules/
 
+/public/javascripts/requirejs/require.js
+/public/javascripts/requirejs/*.js
