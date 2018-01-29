@@ -10,6 +10,11 @@ var Articles = require('../models/article'); //导入模型数据模块
 var  News = require('../models/news'); //导入模型数据模块
 
 var upload = require('../models/upload'); //导入图片上传文件模块
+var info = {
+  "data":"",
+  "msg":"",
+  "state":1
+}
 module.exports = function(app) {
   //主页请求
   app.get(['/', '/index'], function(req, res, next) { //主页路由
@@ -251,32 +256,14 @@ module.exports = function(app) {
 
   //注册页面get请求
   app.get('/reg', function(req, res, next) {
-    res.render('register/reg', {
-      title: '注册',
-      success: req.flash('success').toString(),
-      error: req.flash('error').toString(),
-      user: req.session.user
-    });
+    res.render('register/reg');
   });
   //注册页面post提交请求
   app.post('/reg', function(req, res, next) {
+    var resData = info;
     var name = req.body.name,
       password = req.body.password,
-      password_re = req.body['password-repeat'];
-    if (!trim(name)) {
-      req.flash('error', '用户名不能为空!')
-      return res.redirect('/reg'); //返回注册页
-    }
-    if (!trim(password)) {
-      req.flash('error', '密码不能为空!')
-      return res.redirect('/reg'); //返回注册页
-    }
-    //检验用户两次输入的密码是否一致
-    if (password_re != password) {
-      //console.log("req.session.flash.error",req.session.flash.error)
-      req.flash('error', '两次输入的密码不一致!')
-      return res.redirect('/reg'); //返回注册页
-    }
+      password_re = req.body['password_repeat'];
     //生成密码的 md5 值
     var md5 = crypto.createHash('md5'),
       password = md5.update(req.body.password).digest('hex');
@@ -288,22 +275,30 @@ module.exports = function(app) {
 
     Users.findById(newUser.name, function(err, user) {
       if (err) {
-        req.flash('error', err);
-        return res.redirect('/');
+        resData.state = 0;
+        resData.msg = err;
+        resData.data = null;
+        return res.json(resData);
       }
       if (user) {
-        req.flash('error', '用户已存在!');
-        return res.redirect('/reg'); //返回注册页
+        resData.state = 0;
+        resData.msg = "用户已存在!";
+        resData.data = null;
+        return res.json(resData);
       }
       //如果不存在则新增用户
       newUser.save(function(err, user) {
         if (err) {
-          req.flash('error', err);
-          return res.redirect('/reg'); //注册失败返回主册页
+          resData.state = 0;
+          resData.msg = err;
+          resData.data = null;
+          return res.json(resData);
         }
         req.session.user = user; //用户信息存入 session
-        req.flash('success', '注册成功!');
-        res.redirect('/'); //注册成功后返回主页
+        resData.state = 1;
+        resData.msg = "注册成功";
+        resData.data = null;
+        return res.json(resData);
       });
     })
   });
@@ -312,9 +307,6 @@ module.exports = function(app) {
   app.get('/login', checkNotLogin);
   app.get('/login', function(req, res, next) {
     res.render('register/login', {
-      title: '登录',
-      success: req.flash('success').toString(),
-      error: req.flash('error').toString(),
       user: req.session.user
     });
   });
@@ -322,30 +314,31 @@ module.exports = function(app) {
   //登录路由post提交请求
   app.post('/login', checkNotLogin);
   app.post('/login', function(req, res) {
-    if (!trim(req.body.name)) {
-      req.flash('error', '请输入用户名!')
-      return res.redirect('/login'); //返回登录页
-    }
-    if (!trim(req.body.password)) {
-      req.flash('error', '请输入密码!')
-      return res.redirect('/login'); //返回登录页
-    }
+    var resData = info;
     var md5 = crypto.createHash('md5'),
-      password = md5.update(req.body.password).digest('hex');
+    password = md5.update(req.body.password).digest('hex');
     Users.findById(req.body.name, function(err, user) {
+      console.log("user",user)
+      //用户不存在
       if (!user) {
-        req.flash('error', '用户不存在!');
-        return res.redirect('/login'); //返回登录页
+        resData.state = 0;
+        resData.msg = "用户不存在!";
+        resData.data = null;
+        return res.json(resData);
       }
       //检查密码是否一致
       if (user.password != password) {
-        req.flash('error', '密码错误!');
-        return res.redirect('/login'); //返回登录页
+        resData.state = 0;
+        resData.msg = "密码错误!";
+        resData.data = null;
+        return res.json(resData);
       }
       //用户名密码都匹配后，将用户信息存入 session
       req.session.user = user;
-      req.flash('success', '登陆成功!');
-      res.redirect('/'); //登陆成功后跳转到主页
+      resData.state = 1;
+      resData.msg = "登录成功!";
+      resData.data = null;
+      return res.json(resData);
     })
   });
 
