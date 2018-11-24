@@ -64,8 +64,14 @@ define(function(require) {
          *obj.time 延迟关闭时间
          *obj.callback 关闭后的回调
          */
-        if (typeof obj.time !== "number") obj.time = 1000
-      	obj.time = obj.time || 1000;
+        if (obj !== undefined) {
+          obj.time = obj.time || 1000
+          if (typeof obj.time !== "number") {
+            obj.time = 1000
+          }
+        }else{
+          var obj = {time:1000}
+        }
       	var modelLen = $(".model").length;
         var myModal = 'myModal_' + (modelLen + 1);
         var myModalLabel = 'myModalLabel' + (modelLen + 1);
@@ -78,7 +84,7 @@ define(function(require) {
         myModalDOM.modal({ show: true });
         setTimeout(function(){
         	myModalDOM.modal('hide')
-        	if (obj.callback && typeof obj.callback === 'function') { obj.callback() }
+        	if (obj && obj.callback && typeof obj.callback === 'function') { obj.callback() }
         }, obj.time); 
 				myModalDOM.on('hidden.bs.modal', function(event) {
         	event.target.remove()

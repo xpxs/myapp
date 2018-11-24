@@ -10,7 +10,8 @@ var NewsSchema = new mongoose.Schema({
     newsBorn: String,
     newsTotal: String,
     newsReadTotal: String,
-    newsWebsite: String
+    newsWebsite: String,
+    articleType: String,
 })
 
 NewsSchema.statics = {

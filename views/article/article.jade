@@ -5,6 +5,13 @@ block content
   div.container#content
     div.row
       div.col-md-8.col-md-offset-2
+        ol.breadcrumb
+          li
+            a(href="/") 首页
+          li
+            a(href="/article/list") #{articles.articleType}
+          li #{articles.articleTitle}
+      div.col-md-8.col-md-offset-2
         h1 #{articles.articleTitle}
         p 
           span 来源: #{articles.articleBorn}

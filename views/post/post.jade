@@ -9,7 +9,22 @@ block content
           div.form-group
             label.col-sm-2.control-label 标题:
             div.col-sm-10  
-              input.form-control(type="text" name="title")
+              input.form-control(type="text" name="title")          
+          div.form-group
+            label.col-sm-2.control-label 类型:
+            div.col-sm-10
+              div.col-sm-2
+                input(type="radio" value="1" name="articleType" checked)
+                span 前端              
+              div.col-sm-2
+                input(type="radio" value="2" name="articleType")
+                span 设计              
+              div.col-sm-2
+                input(type="radio" value="3" name="articleType")
+                span 科技焦点              
+              div.col-sm-2
+                input(type="radio" value="4" name="articleType")
+                span 社会新闻
           div.form-group
             label.col-sm-2.control-label 标签:
             div.col-sm-3

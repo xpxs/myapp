@@ -6,7 +6,8 @@ var ArticlesSchema = new mongoose.Schema({
     articleBorn: String,
     articleTime: String,
     articleRead: Number,
-    articleText: String
+    articleText: String,
+    articleType: String,
 })
 //查询的静态方法
 ArticlesSchema.statics = {
